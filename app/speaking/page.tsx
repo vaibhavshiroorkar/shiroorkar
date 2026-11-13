@@ -7,7 +7,7 @@ import { offerings } from "@/content/offerings";
 export const metadata: Metadata = {
   title: "Speaking & Workshops",
   description:
-    "Invite Udaykumar Shiroorkar for keynotes, leadership talks, environmental awareness sessions, student workshops and community programmes.",
+    "Book Udaykumar Shiroorkar for keynotes, leadership talks, environmental awareness sessions, student workshops and community programmes.",
   alternates: { canonical: "/speaking" },
 };
 
@@ -15,7 +15,7 @@ export default function SpeakingPage() {
   return (
     <>
       <PageHeader title="On your" accent="stage" intro="Keynotes, awareness sessions and workshops built on real public service. Formats and fees are agreed per event.">
-        <Pill href="/work-with-us?type=speaking#inquiry">Invite Udaykumar</Pill>
+        <Pill href="/contact?type=speaking#inquiry">Book a talk</Pill>
       </PageHeader>
 
       <section className="shell space-y-6 py-20 lg:py-28">
@@ -47,7 +47,7 @@ export default function SpeakingPage() {
                   </div>
                 </div>
                 <div>
-                  <Pill href={`/work-with-us?type=${o.inquiryType}&topic=${o.id}#inquiry`} tone={i % 2 ? "stage" : "ochre"}>
+                  <Pill href={`/contact?type=${o.inquiryType}&topic=${o.id}#inquiry`} tone={i % 2 ? "stage" : "ochre"}>
                     Ask about this
                   </Pill>
                 </div>

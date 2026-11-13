@@ -89,7 +89,7 @@ export default function AboutPage() {
           advertise legal services.
         </p>
         <div className="mt-10">
-          <Pill href="/work-with-us">Invite him to speak</Pill>
+          <Pill href="/contact">Get in touch</Pill>
         </div>
       </section>
     </>

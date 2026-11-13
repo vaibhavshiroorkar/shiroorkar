@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   async redirects() {
-    return [{ source: "/contact", destination: "/work-with-us", permanent: true }];
+    return [{ source: "/work-with-us", destination: "/contact", permanent: false }];
   },
   images: {
     // YouTube thumbnails for the interview carousel and Media page.

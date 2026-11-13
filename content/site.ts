@@ -4,7 +4,7 @@ export const site = {
   firstName: "Udaykumar",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://uday.shiroorkar.com",
   description:
-    "The work, journey and initiatives of Udaykumar Shiroorkar: environmental responsibility, public service and community impact. Invite him to speak, run a workshop or collaborate.",
+    "The work, journey and initiatives of Udaykumar Shiroorkar: environmental responsibility, public service and community impact. Get in touch about talks, workshops, collaborations or a visit.",
   email: "shiroorkarur@gmail.com",
   /**
    * WhatsApp number in international format, digits only (e.g. "919800000000").

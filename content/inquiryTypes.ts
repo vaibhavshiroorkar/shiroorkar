@@ -5,7 +5,7 @@ export const inquiryTypes: { id: InquiryTypeId; label: string; title: string; de
     id: "speaking",
     /** One word, used on the form's topic chips. */
     label: "Speaking",
-    title: "Invite him to speak",
+    title: "A talk or keynote",
     description: "Keynotes, leadership talks and panels for conferences, companies and colleges.",
   },
   {
