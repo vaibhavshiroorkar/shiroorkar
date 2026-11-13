@@ -23,6 +23,11 @@ export const site = {
       url: "https://www.linkedin.com/in/dr-udaykumar-ir-shiroorkar-9353472a/",
     },
     {
+      label: "Facebook",
+      handle: "Udaykumar IR Shiroorkar",
+      url: "https://www.facebook.com/udaykumar.shiroorkar/",
+    },
+    {
       label: "X",
       handle: "@shiroorkarur",
       url: "https://x.com/shiroorkarur",

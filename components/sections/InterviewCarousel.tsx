@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { youtubeThumb, youtubeUrl, type Interview } from "@/content/interviews";
 import { Arrow, ArrowUpRight, Play } from "@/components/ui/icons";
 
@@ -16,23 +16,46 @@ const slide = (reduce: boolean | null) => ({
   exit: (dir: number) => (reduce ? { opacity: 0 } : { opacity: 0, x: `${dir * -6}%` }),
 });
 
+const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
+
 /**
- * One interview at a time, with an arrow on each side. The thumbnail shows until
- * the visitor taps play; only then does YouTube's privacy-enhanced player load.
+ * One interview at a time, with an arrow on each side.
+ *
+ * Nothing loads from YouTube until the visitor scrolls the carousel into view. Then
+ * the video starts on its own, muted, because browsers block autoplay with sound.
+ * Once the visitor has pressed an arrow or the play button, later videos may play
+ * with sound. The video pauses when scrolled away and resumes on return. Readers who
+ * prefer reduced motion get the tap-to-play thumbnail instead of autoplay.
  */
 export function InterviewCarousel({ items }: { items: Interview[] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
-  const [playing, setPlaying] = useState(false);
+  const [tapped, setTapped] = useState(false);
+  const [interacted, setInteracted] = useState(false);
   const reduce = useReducedMotion();
+  const boxRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const reached = useInView(boxRef, { once: true, amount: 0.6 });
+  const visible = useInView(boxRef, { amount: 0.3 });
+  const playing = tapped || (reached && !reduce);
   const v = items[index];
   const many = items.length > 1;
 
   const go = (dir: 1 | -1) => {
     setDirection(dir);
-    setPlaying(false);
+    setInteracted(true);
+    // Reduced-motion readers go back to the thumbnail; everyone else autoplays the next video.
+    setTapped(false);
     setIndex((i) => (i + dir + items.length) % items.length);
   };
+
+  // Pause when the carousel scrolls out of view and resume when it returns.
+  useEffect(() => {
+    frameRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func: visible ? "playVideo" : "pauseVideo", args: [] }),
+      PLAYER_ORIGIN,
+    );
+  }, [visible]);
 
   const arrow = (dir: 1 | -1) => (
     <button
@@ -50,7 +73,7 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
       <div className="relative flex items-center gap-4 md:gap-6">
         {many && <div className="absolute left-3 top-1/2 -translate-y-1/2 md:static md:translate-y-0">{arrow(-1)}</div>}
 
-        <div className="relative aspect-video flex-1 overflow-hidden rounded-[22px] bg-stage">
+        <div ref={boxRef} className="relative aspect-video flex-1 overflow-hidden rounded-[22px] bg-stage">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
               key={v.youtubeId}
@@ -64,14 +87,18 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
             >
               {playing ? (
                 <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}?autoplay=1&rel=0`}
+                  ref={frameRef}
+                  src={`${PLAYER_ORIGIN}/embed/${v.youtubeId}?autoplay=1&mute=${interacted || tapped ? 0 : 1}&playsinline=1&rel=0&enablejsapi=1`}
                   title={v.title}
                   allow="autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
                   className="absolute inset-0 size-full"
                 />
               ) : (
-                <button type="button" onClick={() => setPlaying(true)} className="group absolute inset-0">
+                <button type="button" onClick={() => {
+                    setTapped(true);
+                    setInteracted(true);
+                  }} className="group absolute inset-0">
                   <Image
                     src={youtubeThumb(v.youtubeId)}
                     alt=""

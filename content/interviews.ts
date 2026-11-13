@@ -1,7 +1,7 @@
 /**
  * Video interviews, shown in the homepage carousel and on the Media page.
  * To add one, paste the YouTube video id (the part after "watch?v=").
- * Videos play only when a visitor taps them, using YouTube's privacy-enhanced embed.
+ * Nothing loads until the carousel is scrolled into view; then the video autoplays muted.
  */
 export type Interview = {
   youtubeId: string;
