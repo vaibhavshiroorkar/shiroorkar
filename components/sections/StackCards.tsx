@@ -24,10 +24,7 @@ function Card({ item, index, total, skinIndex, progress }: { item: StoryCard; in
         style={reduce ? undefined : { scale, transformOrigin: "50% 0%" }}
         className={`grain grid gap-6 overflow-hidden rounded-[28px] p-6 sm:p-10 md:min-h-[72vh] md:grid-cols-2 md:items-stretch md:gap-8 lg:p-14 ${skin.card}`}
       >
-        <div className="relative z-10 flex flex-col justify-between gap-6 md:gap-10">
-          <p className="text-sm opacity-60">
-            {index + 1} of {total}
-          </p>
+        <div className="relative z-10 flex flex-col justify-center">
           <div>
             <h3 className="display text-[clamp(2.75rem,9vw,8rem)]">
               {item.title}

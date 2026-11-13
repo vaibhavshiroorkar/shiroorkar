@@ -30,7 +30,7 @@ function Phone() {
   }, [live]);
 
   return (
-    <figure className="mx-auto w-full max-w-[250px] sm:max-w-[320px]">
+    <div className="mx-auto w-full max-w-[250px] sm:max-w-[320px]">
       <div ref={ref} className="rounded-[46px] bg-stage-deep p-3 shadow-[0_40px_80px_rgba(10,31,24,0.35)]">
         <div className="grain relative flex aspect-[9/18] flex-col items-center justify-between overflow-hidden rounded-[36px] bg-forest px-6 py-12 text-cream">
           <div className="relative z-10 text-center">
@@ -80,8 +80,7 @@ function Phone() {
           </span>
         </div>
       </div>
-      <figcaption className="mt-4 text-center text-xs text-stone">Illustration of the planned caller tune</figcaption>
-    </figure>
+    </div>
   );
 }
 
