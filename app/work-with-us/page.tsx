@@ -22,7 +22,8 @@ export default function WorkWithUsPage() {
             Let&apos;s <span className="font-serif font-normal normal-case italic tracking-normal text-ochre">talk</span>
           </h1>
           <p className="mt-6 max-w-sm text-lg text-cream/75">
-            Talks, workshops, projects or press. Every message gets a personal reply.
+            Invite {site.firstName} to speak, run a workshop or work with you on an environmental
+            project. Every inquiry gets a personal reply.
           </p>
           <ul className="mt-10 space-y-3 text-lg">
             <li>

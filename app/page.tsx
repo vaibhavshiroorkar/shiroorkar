@@ -1,22 +1,16 @@
 import { CutoutHero } from "@/components/hero/CutoutHero";
-import { Reveal } from "@/components/motion/Reveal";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { InterviewCarousel } from "@/components/sections/InterviewCarousel";
-import { ReelsRail } from "@/components/sections/ReelsRail";
 import { CallStory } from "@/components/stories/CallStory";
 import { PlacesStory } from "@/components/stories/PlacesStory";
 import { RevealStory } from "@/components/stories/RevealStory";
 import { StepsStory } from "@/components/stories/StepsStory";
-import { Pill } from "@/components/ui/Pill";
 import { SourceLink } from "@/components/ui/Verify";
 import { heroCutout, stories } from "@/content/bio";
 import { interviews } from "@/content/interviews";
-import { media } from "@/content/media";
-import { instagram, site } from "@/content/site";
 import { publishable } from "@/lib/publish";
 
 export default function Home() {
-  const reels = publishable(media).filter((m) => m.kind === "reel");
 
   return (
     <>
@@ -58,52 +52,6 @@ export default function Home() {
         );
       })}
 
-      {/* Reels */}
-      {reels.length > 0 ? (
-        <ReelsRail reels={reels} profile={instagram} />
-      ) : (
-        <section className="shell py-28">
-          <a
-            href={instagram.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="grain group relative flex flex-col justify-between gap-10 overflow-hidden rounded-[28px] bg-stage p-8 text-cream sm:p-12 md:flex-row md:items-end"
-          >
-            <span className="display relative z-10 text-[clamp(3rem,8vw,7rem)]">Watch the Reels</span>
-            <span className="relative z-10 inline-flex items-center gap-2 text-lg">{instagram.handle} on Instagram</span>
-          </a>
-        </section>
-      )}
-
-
-      {/* Closing */}
-      <section className="grain relative overflow-hidden bg-stage text-cream">
-        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_70%_at_80%_100%,rgba(198,154,90,0.18),transparent_70%)]" />
-        <div className="shell relative z-10 py-28 lg:py-40">
-          <Reveal>
-            <h2 className="display text-[clamp(4rem,14vw,13rem)]">
-              Let&apos;s work <span className="font-serif font-normal normal-case italic tracking-normal text-ochre">together</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="mt-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <p className="max-w-md text-lg text-cream/75">
-                Invite {site.firstName} to speak, run a workshop or work with you on an environmental
-                project. Every inquiry gets a personal reply.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Pill href="/work-with-us">Start an inquiry</Pill>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="inline-flex min-h-12 items-center rounded-full border border-cream/30 px-6 text-[15px] font-semibold hover:bg-cream hover:text-stage"
-                >
-                  {site.email}
-                </a>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
     </>
   );
 }
