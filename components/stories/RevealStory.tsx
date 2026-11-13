@@ -10,7 +10,7 @@ import { ArrowUpRight } from "@/components/ui/icons";
 
 function Overlay({ story, cards }: { story: Story; cards: StoryCard[] }) {
   return (
-    <div className="shell relative z-10 flex h-full flex-col justify-end pb-10 text-cream lg:pb-20">
+    <div className="shell relative z-10 flex h-full flex-col justify-end pb-10 text-cream [text-shadow:0_2px_24px_rgba(10,31,24,0.55)] lg:pb-20">
       <p className="display text-[clamp(3rem,13vw,13rem)]">{story.title}</p>
       <div className="mt-5 grid gap-5 md:mt-8 md:grid-cols-[1fr_1fr_auto] md:items-end md:gap-8">
         {cards.map((c) => (
@@ -58,7 +58,8 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
     return (
       <div className="relative h-[90svh] overflow-hidden">
         {image && <Photo image={image} className="absolute inset-0 h-full" sizes="100vw" />}
-        <div className="absolute inset-0 bg-gradient-to-t from-stage-deep via-stage-deep/40 to-transparent" />
+        <div className="absolute inset-0 bg-stage-deep/35" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-stage-deep/60 to-transparent" />
         <Overlay story={story} cards={cards} />
       </div>
     );
@@ -71,7 +72,8 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
           <motion.div style={{ scale: imageScale }} className="absolute inset-0">
             {image && <Photo image={image} className="h-full" sizes="100vw" />}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-stage-deep via-stage-deep/40 to-transparent" />
+          <div className="absolute inset-0 bg-stage-deep/35" />
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-stage-deep/60 to-transparent" />
         </motion.div>
         <motion.div style={{ opacity: textOpacity }} className="absolute inset-0">
           <Overlay story={story} cards={cards} />
