@@ -15,24 +15,26 @@ export function Footer() {
           <Link href="/" className="display text-4xl text-cream" aria-label="Shiroorkar, home">
             Shiroorkar
           </Link>
-          <p className="mt-3 max-w-xs leading-relaxed">
+          <p className="mt-3 text-xs text-cream/40">
+            &copy; <Year /> Shiroorkar
+          </p>
+        </div>
+        <div className="md:text-right">
+          <p className="max-w-xs leading-relaxed md:ml-auto">
             The work and public voice of {site.person}. Speaking, workshops and environmental
             collaborations.
           </p>
+          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
+            {site.socials.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-cream">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="flex gap-6">
-          {site.socials.map((s) => (
-            <li key={s.url}>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-cream">
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
-      <p className="shell border-t border-cream/10 py-5 text-xs text-cream/40">
-        &copy; <Year /> Shiroorkar
-      </p>
     </footer>
   );
 }
