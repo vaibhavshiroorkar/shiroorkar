@@ -13,10 +13,22 @@ export type Interview = {
 
 export const interviews: Interview[] = [
   {
+    youtubeId: "R7bqKX61mr8",
+    title: "Ordinary People, Extraordinary Achievements",
+    channel: "ABP News",
+    detail: "Ideas of India Summit 2026, panel with Rohan Mahajan",
+  },
+  {
     youtubeId: "ukV0-lD8S08",
     title: "Service Beyond Duty: In Conversation With Udaykumar Shiroorkar",
     channel: "ABP Live",
     detail: "Lead Inc. series",
+  },
+  {
+    youtubeId: "8GJY2q6TRNo",
+    title: "Meet BMC's Demolition Man: Udaykumar Shiroorkar's Journey to the Big Screen",
+    channel: "Lokmat Times",
+    detail: "Dongri, Madanpura and Mohammed Ali Road",
   },
   {
     youtubeId: "ksFRHdB_xPA",
