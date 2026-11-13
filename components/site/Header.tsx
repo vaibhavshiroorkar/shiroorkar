@@ -29,7 +29,7 @@ export function Header() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4">
       <div className="shell">
-        <div className="pointer-events-auto flex h-14 items-center justify-between gap-4 rounded-full bg-stage/80 pl-5 pr-2 text-cream shadow-[0_8px_30px_rgba(10,31,24,0.25)] backdrop-blur-md">
+        <div className="pointer-events-auto flex h-14 items-center justify-between gap-4 rounded-full bg-stage/95 pl-5 pr-2 text-cream shadow-[0_8px_30px_rgba(10,31,24,0.25)]">
           <Link href="/" onClick={homeClick} className="display text-[22px] leading-none tracking-wide" aria-label="Shiroorkar, home">
             Shiroorkar
           </Link>

@@ -5,7 +5,7 @@ import { StackCards } from "@/components/sections/StackCards";
 import { CallStory } from "@/components/stories/CallStory";
 import { PlacesStory } from "@/components/stories/PlacesStory";
 import { RevealStory } from "@/components/stories/RevealStory";
-import { StepsStory } from "@/components/stories/StepsStory";
+import { TrioStory } from "@/components/stories/TrioStory";
 import { SourceLink } from "@/components/ui/Verify";
 import { heroCutout, stories } from "@/content/bio";
 import { interviews, youtubeThumb, youtubeUrl } from "@/content/interviews";
@@ -69,7 +69,7 @@ export default function Home() {
                 <StackCards items={cards} />
               </div>
             )}
-            {story.layout === "steps" && <StepsStory cards={cards} />}
+            {story.layout === "trio" && <TrioStory cards={cards} />}
             {story.layout === "places" && <PlacesStory story={story} cards={cards} />}
             {story.layout === "call" && <CallStory cards={cards} />}
             {story.layout === "reveal" && <RevealStory story={story} cards={cards} />}

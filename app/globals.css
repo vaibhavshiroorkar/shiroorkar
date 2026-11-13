@@ -84,7 +84,8 @@
     line-height: 0.86;
   }
 
-  /* Film-like grain over the green stages. Decorative only. */
+  /* Film-like grain over the green stages. Decorative only. No blend mode: it would
+     force the browser to repaint these large areas on every scroll frame. */
   .grain {
     position: relative;
     isolation: isolate;
@@ -96,8 +97,7 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.09;
-    mix-blend-mode: overlay;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }

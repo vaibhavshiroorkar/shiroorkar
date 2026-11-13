@@ -26,12 +26,12 @@ export type StoryCard = { title: string; lines: string; image: ImageRef } & Veri
  * How a story is presented after its sentence. Each story gets its own so the
  * homepage never repeats itself:
  * cards:  stacking cards that slide over each other
- * steps:  a pinned sequence, one step at a time beside a photo
+ * trio:   three moments side by side
  * places: giant drifting place names, then the facts
  * call:   a phone mid-call to the ward helpline, beside the facts
  * reveal: a photo window that grows to fill the screen
  */
-export type StoryLayout = "cards" | "steps" | "places" | "call" | "reveal";
+export type StoryLayout = "cards" | "trio" | "places" | "call" | "reveal";
 
 /** A homepage story: one sentence that lights up on scroll, then its own layout. */
 export type Story = {
@@ -183,7 +183,7 @@ export const stories: Story[] = [
   {
     id: "recognition",
     title: "Recognition",
-    layout: "steps",
+    layout: "trio",
     statement: [
       { text: "The ward officer Mumbai called Singham" },
       { text: "now speaks on national stages.", accent: true },

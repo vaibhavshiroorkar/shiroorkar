@@ -1,6 +1,7 @@
 "use client";
 
 import Lenis from "lenis";
+import { cancelFrame, frame } from "motion/react";
 import { useEffect } from "react";
 
 /** Fired by links that should take the visitor back to the top of the current page. */
@@ -12,13 +13,20 @@ export function scrollToTop() {
 
 /**
  * Smooth, weighted scrolling, skipped for readers who prefer reduced motion.
- * Also handles "back to top" requests, through Lenis when it is running so the
- * two never fight over the scroll position.
+ *
+ * Lenis is driven from Motion's own frame loop rather than a separate
+ * requestAnimationFrame, so the scroll position and every scroll-linked
+ * animation update in the same frame. Two separate loops let animations lag a
+ * frame behind the scroll, which shows up as jitter in pinned sections.
+ * Also handles "back to top" requests.
  */
 export function SmoothScroll() {
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const lenis = reduce ? null : new Lenis({ autoRaf: true, lerp: 0.1, anchors: true });
+    const lenis = reduce ? null : new Lenis({ autoRaf: false, lerp: 0.1, anchors: true });
+
+    const tick = ({ timestamp }: { timestamp: number }) => lenis?.raf(timestamp);
+    if (lenis) frame.update(tick, true);
 
     const toTop = () => {
       if (lenis) lenis.scrollTo(0);
@@ -28,6 +36,7 @@ export function SmoothScroll() {
 
     return () => {
       window.removeEventListener(SCROLL_TOP_EVENT, toTop);
+      cancelFrame(tick);
       lenis?.destroy();
     };
   }, []);

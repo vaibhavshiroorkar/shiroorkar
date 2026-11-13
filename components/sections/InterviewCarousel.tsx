@@ -59,7 +59,7 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
     <button
       type="button"
       onClick={() => go(dir)}
-      className="z-10 flex size-12 shrink-0 items-center justify-center rounded-full bg-cream/90 text-stage shadow-lg backdrop-blur transition-colors hover:bg-ochre md:size-14 md:bg-stage md:text-cream md:shadow-none md:hover:bg-forest"
+      className="z-10 flex size-12 shrink-0 items-center justify-center rounded-full bg-cream text-stage shadow-lg transition-colors hover:bg-ochre md:size-14 md:bg-stage md:text-cream md:shadow-none md:hover:bg-forest"
     >
       <span className="sr-only">{dir === 1 ? "Next interview" : "Previous interview"}</span>
       <Arrow className={`size-5 ${dir === -1 ? "rotate-180" : ""}`} />

@@ -41,7 +41,7 @@ export function Photo({
     >
       <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_30%_25%,rgba(239,232,216,0.16),transparent_70%)]" />
       {draftMode && (
-        <p className="absolute inset-x-3 bottom-3 z-10 rounded-lg bg-black/35 px-3 py-2 text-[11px] leading-snug text-cream backdrop-blur-sm">
+        <p className="absolute inset-x-3 bottom-3 z-10 rounded-lg bg-black/50 px-3 py-2 text-[11px] leading-snug text-cream">
           Photo: {image.brief}
         </p>
       )}
