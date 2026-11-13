@@ -1,3 +1,4 @@
+import { interviews, youtubeThumb, youtubeUrl } from "./interviews";
 import { sources } from "./sources";
 import type { ImageRef, Verifiable } from "./types";
 
@@ -92,15 +93,18 @@ export const media: MediaItem[] = [
     thumb: { src: null, alt: "", brief: "Optional: press photo with permission" },
     status: "sourced",
   },
-  {
-    id: "video-1",
-    kind: "video",
-    title: "Interview or talk title",
-    outlet: "Channel or event",
-    url: "https://www.youtube.com/",
-    thumb: { src: null, alt: "", brief: "Video thumbnail, 16:9" },
-    status: "pending",
-  },
+  ...interviews.map(
+    (v): MediaItem => ({
+      id: `video-${v.youtubeId}`,
+      kind: "video",
+      title: v.title,
+      outlet: v.channel,
+      excerpt: v.detail,
+      url: youtubeUrl(v.youtubeId),
+      thumb: { src: youtubeThumb(v.youtubeId), alt: "", brief: "YouTube thumbnail" },
+      status: "sourced",
+    }),
+  ),
   {
     id: "photo-1",
     kind: "photo",

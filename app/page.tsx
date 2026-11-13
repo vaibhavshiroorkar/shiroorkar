@@ -1,12 +1,14 @@
 import { CutoutHero } from "@/components/hero/CutoutHero";
 import { Reveal } from "@/components/motion/Reveal";
 import { WordReveal } from "@/components/motion/WordReveal";
+import { InterviewCarousel } from "@/components/sections/InterviewCarousel";
 import { Marquee } from "@/components/sections/Marquee";
 import { ProgrammeList } from "@/components/sections/ProgrammeList";
 import { ReelsRail } from "@/components/sections/ReelsRail";
 import { StackCards } from "@/components/sections/StackCards";
 import { Pill } from "@/components/ui/Pill";
 import { heroCutout, stories } from "@/content/bio";
+import { interviews } from "@/content/interviews";
 import { media } from "@/content/media";
 import { offerings } from "@/content/offerings";
 import { instagram, site } from "@/content/site";
@@ -38,6 +40,18 @@ export default function Home() {
           </section>
         );
       })}
+
+      {/* Interviews */}
+      {interviews.length > 0 && (
+        <section aria-labelledby="interviews-title" className="shell pt-28 lg:pt-40">
+          <h2 id="interviews-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
+            In <span className="font-serif font-normal normal-case italic tracking-normal text-forest">conversation</span>
+          </h2>
+          <div className="mt-6">
+            <InterviewCarousel items={interviews} />
+          </div>
+        </section>
+      )}
 
       {/* Reels */}
       {reels.length > 0 ? (
