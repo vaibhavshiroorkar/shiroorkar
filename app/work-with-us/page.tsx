@@ -26,7 +26,8 @@ export default function WorkWithUsPage() {
           </p>
           <ul className="mt-10 space-y-3 text-lg">
             <li>
-              <a href={`mailto:${site.email}`} className="break-all underline-offset-4 hover:underline">
+              <a href={`mailto:${site.email}`} className="inline-flex items-center gap-1.5 break-all underline-offset-4 hover:underline">
+                <span className="w-24 shrink-0 text-sm text-cream/50">Gmail</span>
                 {site.email}
               </a>
             </li>
