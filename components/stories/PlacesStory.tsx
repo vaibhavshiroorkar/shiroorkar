@@ -1,22 +1,41 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useEffect, useRef } from "react";
 import type { Story, StoryCard } from "@/content/bio";
 import type { Source } from "@/content/types";
 import { SourceLink, VerifyBadge } from "@/components/ui/Verify";
 
 /**
  * One giant place name. Rows alternate left and right alignment inside the page
- * margins, drift a little inward as the page scrolls (never past the edge), and
- * fill in solid green while crossing the middle of the screen.
+ * margins. As the page scrolls, each name sweeps inward across the empty space in
+ * its row (at least 15% of the row, so long names still move), and fills in solid
+ * green while crossing the middle of the screen.
  */
 function PlaceRow({ name, index }: { name: string; index: number }) {
   const ref = useRef<HTMLLIElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const right = index % 2 === 1;
-  const x = useTransform(scrollYProgress, [0, 1], right ? ["0%", "-6%"] : ["0%", "6%"]);
+  const nameRef = useRef<HTMLSpanElement>(null);
+  const travel = useMotionValue(0);
+  const x = useTransform(() => (right ? -1 : 1) * scrollYProgress.get() * travel.get());
+
+  // Travel distance = the free space beside the name, measured once fonts load and on resize.
+  useEffect(() => {
+    const row = ref.current;
+    const name = nameRef.current;
+    if (!row || !name) return;
+    const measure = () => {
+      const free = row.clientWidth - name.scrollWidth;
+      travel.set(Math.max(free, row.clientWidth * 0.15));
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+    const ro = new ResizeObserver(measure);
+    ro.observe(row);
+    return () => ro.disconnect();
+  }, [travel]);
   const fill = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, 1, 0]);
   const text = "display block whitespace-nowrap text-[clamp(2.4rem,10.5vw,10rem)]";
   const align = right ? "text-right" : "text-left";
@@ -28,7 +47,9 @@ function PlaceRow({ name, index }: { name: string; index: number }) {
   return (
     <li ref={ref} className={align}>
       <motion.div style={{ x }} className="relative">
-        <span className={`${text} text-transparent [-webkit-text-stroke:1.5px_var(--color-stage)]`}>{name}</span>
+        <span ref={nameRef} className={`${text} w-max text-transparent [-webkit-text-stroke:1.5px_var(--color-stage)] ${right ? "ml-auto" : ""}`}>
+          {name}
+        </span>
         <motion.span aria-hidden style={{ opacity: fill }} className={`${text} absolute inset-0 text-forest`}>
           {name}
         </motion.span>
