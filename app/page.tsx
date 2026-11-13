@@ -32,7 +32,7 @@ export default function Home() {
       <script
         type="application/ld+json"
         // Static data from content/interviews.ts; escaping "<" keeps it from closing the script tag.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd).replace(/</g, "\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd).replace(/</g, "\\u003c") }}
       />
       <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} />
 
