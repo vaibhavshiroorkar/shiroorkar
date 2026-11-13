@@ -22,10 +22,23 @@ export const heroCutout = {
 
 export type StoryCard = { title: string; lines: string; image: ImageRef } & Verifiable;
 
-/** A homepage story: one sentence that lights up on scroll, then its stacking cards. */
+/**
+ * How a story is presented after its sentence. Each story gets its own so the
+ * homepage never repeats itself:
+ * steps:  a pinned sequence, one step at a time beside a photo
+ * places: giant drifting place names, then the facts
+ * call:   a phone mid-call to the ward helpline, beside the facts
+ * reveal: a photo window that grows to fill the screen
+ */
+export type StoryLayout = "steps" | "places" | "call" | "reveal";
+
+/** A homepage story: one sentence that lights up on scroll, then its own layout. */
 export type Story = {
   id: string;
   title: string;
+  layout: StoryLayout;
+  /** For the places layout: neighbourhoods named in the sources. */
+  places?: { name: string; source: Source }[];
   statement: { text: string; accent?: boolean }[];
   /** Cited under the sentence when the sentence itself states a fact. */
   source?: Source;
@@ -42,6 +55,7 @@ export const stories: Story[] = [
   {
     id: "second-chances",
     title: "Second chances",
+    layout: "steps",
     statement: [
       { text: "He asked the people who clean Mumbai to go back to school." },
       { text: "Twenty-three of them passed.", accent: true },
@@ -84,6 +98,15 @@ export const stories: Story[] = [
   {
     id: "public-space",
     title: "Public space",
+    layout: "places",
+    places: [
+      { name: "Madanpura", source: sources.fpjProfile },
+      { name: "Pydhonie", source: sources.fpjProfile },
+      { name: "Abdul Rehman Street", source: sources.fpjProfile },
+      { name: "Nagpada", source: sources.fpjProfile },
+      { name: "Dongri", source: sources.dna2018 },
+      { name: "Ismail Curtay Street", source: sources.dna2018 },
+    ],
     statement: [
       { text: "In some of Mumbai's densest streets," },
       { text: "he gave public space back to the public.", accent: true },
@@ -125,6 +148,7 @@ export const stories: Story[] = [
   {
     id: "clean-city",
     title: "Clean city",
+    layout: "call",
     statement: [
       { text: "He wanted every call to the ward office" },
       { text: "to carry a reason to keep Mumbai clean.", accent: true },
@@ -158,6 +182,7 @@ export const stories: Story[] = [
   {
     id: "environment",
     title: "Nisarg Rakshak",
+    layout: "reveal",
     statement: [
       { text: "Today he goes by Nisarg Rakshak," },
       { text: "the protector of nature.", accent: true },

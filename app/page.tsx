@@ -3,7 +3,10 @@ import { Reveal } from "@/components/motion/Reveal";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { InterviewCarousel } from "@/components/sections/InterviewCarousel";
 import { ReelsRail } from "@/components/sections/ReelsRail";
-import { StackCards } from "@/components/sections/StackCards";
+import { CallStory } from "@/components/stories/CallStory";
+import { PlacesStory } from "@/components/stories/PlacesStory";
+import { RevealStory } from "@/components/stories/RevealStory";
+import { StepsStory } from "@/components/stories/StepsStory";
 import { Pill } from "@/components/ui/Pill";
 import { SourceLink } from "@/components/ui/Verify";
 import { heroCutout, stories } from "@/content/bio";
@@ -31,23 +34,26 @@ export default function Home() {
         </section>
       )}
 
-      {/* Stories: a sentence that lights up on scroll, then its stacking cards. */}
-      {stories.map((story, i) => {
+      {/* Stories: a sentence that lights up on scroll, then a layout of its own. */}
+      {stories.map((story) => {
         const cards = publishable(story.cards);
         if (cards.length === 0) return null;
         return (
-          <section key={story.id} id={story.id} aria-labelledby={`${story.id}-title`} className="shell">
+          <section key={story.id} id={story.id} aria-labelledby={`${story.id}-title`}>
             <h2 id={`${story.id}-title`} className="sr-only">
               {story.title}
             </h2>
-            <div className="pb-20 pt-28 sm:pt-36 lg:pb-28 lg:pt-48">
+            <div className="shell pb-20 pt-28 sm:pt-36 lg:pb-28 lg:pt-48">
               <WordReveal
                 className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
                 segments={story.statement}
               />
               <SourceLink source={story.source} className="mt-6" />
             </div>
-            <StackCards items={cards} skinOffset={i} />
+            {story.layout === "steps" && <StepsStory cards={cards} />}
+            {story.layout === "places" && <PlacesStory story={story} cards={cards} />}
+            {story.layout === "call" && <CallStory cards={cards} />}
+            {story.layout === "reveal" && <RevealStory story={story} cards={cards} />}
           </section>
         );
       })}

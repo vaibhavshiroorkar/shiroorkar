@@ -44,8 +44,10 @@ Remove it afterwards with `git worktree remove ../shiroorkar-v1`.
 | Design demos A to D | none | Rebuilt as HTML in `designs/demos/` |
 | v2 Green cutout hero | `bbd2d87` | On `main`, the live version |
 | v3 Work-led homepage | `55edb82` | On branch `v3-work-led`, not live |
+| v4 Story pattern | `593af86` | Archived in `designs/v4/` |
+| v5 A layout per story | latest `main` | Current |
 
-`main` is what Vercel deploys. To make v3 live later, merge `v3-work-led` into `main`.
+`main` is what Vercel deploys.
 
 ## v0: Scaffold (`f4a90d4`)
 
@@ -124,3 +126,25 @@ kept on v2 by choice.
   `content/timeline.ts`, so it does not appear on the public site until the family decides. A
   headline claim about Dawood Ibrahim-linked demolitions is left out entirely until the family
   confirms it.
+
+## v4: Story pattern (`593af86`)
+
+Built on v2 after going back from v3.
+
+- **Hero:** the giant word became UDAYKUMAR, with Shiroorkar as the wordmark. The bottom-right Instagram card and button were removed.
+- **Homepage:** the 23 / 26 / 1 figures went. Each story became a sentence that lights up on scroll, followed by stacking cards. The four stories were Second chances, Public space, Clean city and Nisarg Rakshak.
+- **Interviews:** a carousel of five YouTube interviews, one video at a time, autoplaying muted when scrolled into view.
+- **Elsewhere:**
+  - Navigation became one word each.
+  - The Contact page folded into a lean Invite page.
+  - The footer shrank to a single row.
+- **Why it changed:** four identical card stacks felt repetitive.
+
+## v5: A layout per story (current)
+
+Same design as v4, but each story now has its own layout after its sentence:
+
+- **Second chances:** a pinned sequence. The photo cross-fades while the step text changes beside it.
+- **Public space:** giant neighbourhood names drift sideways and fill in green, followed by four facts.
+- **Clean city:** a phone mid-call to the B Ward helpline, with the planned messages cycling.
+- **Nisarg Rakshak:** a photo window that grows to fill the screen, with his title and Reels link over it.

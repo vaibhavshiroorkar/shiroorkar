@@ -26,7 +26,7 @@ cd "$work"
 rm -rf app/api app/opengraph-image.* app/sitemap.ts app/robots.ts docs
 
 # Static export cannot run with Cache Components, so drop "use cache" from this copy only.
-grep -rl '"use cache"' app components 2>/dev/null | xargs -r sed -i '/"use cache";/d'
+{ grep -rl '"use cache"' app components 2>/dev/null || true; } | xargs -r sed -i '/"use cache";/d'
 mv next.config.ts next.config.base.ts
 cat > next.config.ts <<EOF
 import type { NextConfig } from "next";
