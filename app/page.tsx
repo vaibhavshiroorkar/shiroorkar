@@ -6,7 +6,7 @@ import { ProgrammeList } from "@/components/sections/ProgrammeList";
 import { ReelsRail } from "@/components/sections/ReelsRail";
 import { StackCards } from "@/components/sections/StackCards";
 import { Pill } from "@/components/ui/Pill";
-import { chapters, heroCutout } from "@/content/bio";
+import { heroCutout, stories } from "@/content/bio";
 import { media } from "@/content/media";
 import { offerings } from "@/content/offerings";
 import { instagram, site } from "@/content/site";
@@ -20,24 +20,25 @@ export default function Home() {
     <>
       <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} latest={latest} />
 
-      {/* Statement */}
-      <section className="shell pb-24 pt-28 sm:pt-36 lg:pb-32 lg:pt-48">
-        <WordReveal
-          className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
-          segments={[
-            { text: "He asked the people who clean Mumbai to go back to school." },
-            { text: "Twenty-three of them passed.", accent: true },
-          ]}
-        />
-      </section>
-
-      {/* Story */}
-      <section aria-labelledby="story-title" className="shell">
-        <h2 id="story-title" className="display mb-10 text-[clamp(3.5rem,10vw,9rem)] text-stage">
-          His <span className="font-serif font-normal normal-case italic tracking-normal text-forest">story</span>
-        </h2>
-        <StackCards chapters={publishable(chapters)} />
-      </section>
+      {/* Stories: a sentence that lights up on scroll, then its stacking cards. */}
+      {stories.map((story, i) => {
+        const cards = publishable(story.cards);
+        if (cards.length === 0) return null;
+        return (
+          <section key={story.id} id={story.id} aria-labelledby={`${story.id}-title`} className="shell">
+            <h2 id={`${story.id}-title`} className="sr-only">
+              {story.title}
+            </h2>
+            <div className="pb-20 pt-28 sm:pt-36 lg:pb-28 lg:pt-48">
+              <WordReveal
+                className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
+                segments={story.statement}
+              />
+            </div>
+            <StackCards items={cards} skinOffset={i} />
+          </section>
+        );
+      })}
 
       {/* Reels */}
       {reels.length > 0 ? (

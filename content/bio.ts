@@ -20,38 +20,154 @@ export const heroCutout = {
   },
 } satisfies Record<string, ImageRef>;
 
-/** Short chapters for the homepage stacking cards. Each line is sourced. */
-export const chapters: ({ title: string; lines: string; image: ImageRef } & Verifiable)[] = [
+export type StoryCard = { title: string; lines: string; image: ImageRef } & Verifiable;
+
+/** A homepage story: one sentence that lights up on scroll, then its stacking cards. */
+export type Story = {
+  id: string;
+  title: string;
+  statement: { text: string; accent?: boolean }[];
+  cards: StoryCard[];
+};
+
+const photo = (brief: string): ImageRef => ({ src: null, alt: "", brief });
+
+/**
+ * Homepage stories, in order. Each card states only what its source reports.
+ * Add a new story here and the homepage picks it up.
+ */
+export const stories: Story[] = [
   {
-    title: "The ward",
-    lines:
-      "As Assistant Municipal Commissioner of the BMC's 'B' Ward, he took on unauthorised construction in Madanpura, Pydhonie, Abdul Rehman Street and Nagpada.",
-    image: { src: null, alt: "", brief: "Street or ward office photo, 4:3" },
-    status: "sourced",
-    source: sources.fpjProfile,
+    id: "second-chances",
+    title: "Second chances",
+    statement: [
+      { text: "He asked the people who clean Mumbai to go back to school." },
+      { text: "Twenty-three of them passed.", accent: true },
+    ],
+    cards: [
+      {
+        title: "The school",
+        lines:
+          "The Dongri Municipal Night School was about to close for lack of students. He saw a way to keep it open.",
+        image: photo("The Dongri night school or its classroom, 4:3"),
+        status: "sourced",
+        source: sources.nagpurToday,
+      },
+      {
+        title: "The workers",
+        lines:
+          "Sweepers, manhole cleaners and repairmen aged 30 to 50, many earning under Rs 6,000 a month. He filled in their forms himself.",
+        image: photo("Photo with the civic workers, 4:3"),
+        status: "sourced",
+        source: sources.yourStory2017,
+      },
+      {
+        title: "The result",
+        lines:
+          "In June 2017, 21 men and 2 women passed their SSC exams and earned raises of up to Rs 3,000. Then 26 more joined night classes.",
+        image: photo("The felicitation at the night school, 4:3"),
+        status: "sourced",
+        source: sources.yourStory2017,
+      },
+      {
+        title: "The film",
+        lines:
+          "Their story became the Marathi feature film Ata Thambaycha Naay!, released on 1 May 2025, with Ashutosh Gowariker in his role.",
+        image: photo("His own photo at the premiere or a screening, 4:3"),
+        status: "sourced",
+        source: sources.wikiFilm,
+      },
+    ],
   },
   {
-    title: "The workers",
-    lines:
-      "He pushed sweepers and manhole cleaners, many earning under Rs 6,000 a month, to go back to their studies. Twenty-three passed their SSC exams.",
-    image: { src: null, alt: "", brief: "Photo with civic workers, 4:3" },
-    status: "sourced",
-    source: sources.fpjProfile,
+    id: "public-space",
+    title: "Public space",
+    statement: [
+      { text: "In some of Mumbai's densest streets," },
+      { text: "he gave public space back to the public.", accent: true },
+    ],
+    cards: [
+      {
+        title: "B Ward",
+        lines:
+          "As Assistant Municipal Commissioner of 'B' Ward he was responsible for Madanpura, Pydhonie, Abdul Rehman Street and Nagpada.",
+        image: photo("Street scene or the ward office, 4:3"),
+        status: "sourced",
+        source: sources.fpjProfile,
+      },
+      {
+        title: "The drives",
+        lines:
+          "He took a firm stand against unauthorised construction and led demolition drives to reclaim public space.",
+        image: photo("A reclaimed street or footpath, 4:3"),
+        status: "sourced",
+        source: sources.fpjProfile,
+      },
+      {
+        title: "Singham",
+        lines: "That firmness earned him a name across Mumbai: the BMC's \"Singham\".",
+        image: photo("Portrait from his BMC years, 4:3"),
+        status: "sourced",
+        source: sources.prahaar2025,
+      },
+    ],
   },
   {
-    title: "The film",
-    lines:
-      "Their story became the Marathi feature film Ata Thambaycha Naay!, released on 1 May 2025, with Ashutosh Gowariker in his role.",
-    image: { src: null, alt: "", brief: "Photo at the premiere or screening (own photo only), 4:3" },
-    status: "sourced",
-    source: sources.wikiFilm,
+    id: "clean-city",
+    title: "Clean city",
+    statement: [
+      { text: "He wanted every call to the ward office" },
+      { text: "to carry a reason to keep Mumbai clean.", accent: true },
+    ],
+    cards: [
+      {
+        title: "The tune",
+        lines:
+          "In 2017 he planned a Swachh Mumbai jingle as the caller tune for B Ward's civic helpline.",
+        image: photo("Cleanliness drive in the ward, 4:3"),
+        status: "sourced",
+        source: sources.dna2017,
+      },
+      {
+        title: "The message",
+        lines:
+          "Its words would change with each campaign: waste segregation one month, the work of street-cleaning staff the next.",
+        image: photo("Street-cleaning staff at work, 4:3"),
+        status: "sourced",
+        source: sources.dna2017,
+      },
+      {
+        title: "The videos",
+        lines: "Short videos on the ward's cleanliness work were planned for residents as well.",
+        image: photo("Residents or a ward awareness event, 4:3"),
+        status: "sourced",
+        source: sources.dna2017,
+      },
+    ],
   },
   {
-    title: "The work today",
-    lines:
-      "Now his cause is the environment: protecting green cover and public space, and explaining civic issues in plain words on Instagram.",
-    image: { src: null, alt: "", brief: "Field photo of environmental work, 4:3" },
-    status: "confirmed",
+    id: "environment",
+    title: "Environment today",
+    statement: [
+      { text: "Now his ward is the whole city," },
+      { text: "and his cause is the environment.", accent: true },
+    ],
+    cards: [
+      {
+        title: "Green cover",
+        lines: "Protecting green cover and shared public space, and holding the people responsible to account.",
+        image: photo("Field photo of environmental work, 4:3"),
+        status: "confirmed",
+        note: "Add named projects, places and dates as they are confirmed.",
+      },
+      {
+        title: "Reels",
+        lines:
+          "Short, plain-spoken Instagram Reels explain environmental and civic issues to a growing audience.",
+        image: photo("A frame from one of his Reels, 4:3"),
+        status: "confirmed",
+      },
+    ],
   },
 ];
 
