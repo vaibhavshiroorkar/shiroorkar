@@ -26,23 +26,18 @@ function playerCommand(frame: HTMLIFrameElement | null, func: string, args: unkn
 /**
  * One interview at a time, with an arrow on each side.
  *
- * Nothing loads from YouTube until the visitor scrolls the carousel into view. Then
- * the video starts on its own, with sound at full volume when the browser allows it.
- * Browsers only allow sound after the visitor has clicked or tapped the page, so if
- * they have not, it starts muted, shows "Tap for sound", and unmutes on the first
- * click or key press anywhere. Arrows and the play button count as that click.
- * The video pauses when scrolled away and resumes on return. Readers who prefer
- * reduced motion get the tap-to-play thumbnail instead of autoplay.
+ * Nothing loads from YouTube until the visitor reaches the carousel. A video only
+ * starts on its own when it can play with sound, which browsers allow once the
+ * visitor has clicked or tapped the page. Otherwise it waits on its thumbnail for
+ * the visitor to press play. It never plays muted. Pressing an arrow counts as a
+ * click, so the next video starts with sound. The video pauses when scrolled away
+ * and resumes on return. Readers who prefer reduced motion always press play.
  */
 export function InterviewCarousel({ items }: { items: Interview[] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [tapped, setTapped] = useState(false);
   const [started, setStarted] = useState(false);
-  // Fixed when a video loads (changing the player URL would restart it).
-  const [srcMuted, setSrcMuted] = useState(true);
-  // Live state: flips to false when we unmute through the player API.
-  const [muted, setMuted] = useState(true);
   const reduce = useReducedMotion();
   const boxRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLIFrameElement>(null);
@@ -53,32 +48,22 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
 
   const go = (dir: 1 | -1) => {
     setDirection(dir);
-    // The arrow press itself lets the next video start with sound.
-    setSrcMuted(false);
-    setMuted(false);
+    // The arrow press is a click, so the next video may start with sound.
+    setStarted(!reduce);
     // Reduced-motion readers go back to the thumbnail; everyone else autoplays the next video.
     setTapped(false);
     setIndex((i) => (i + dir + items.length) % items.length);
   };
 
-  const unmute = () => {
-    playerCommand(frameRef.current, "unMute");
-    playerCommand(frameRef.current, "setVolume", [100]);
-    setMuted(false);
-  };
-
-  // Start the first time the carousel is mostly on screen. Sound is allowed only if
-  // the visitor has already interacted with the page.
+  // Start the first time the carousel is mostly on screen, but only if it can play
+  // with sound: the visitor must already have interacted with the page.
   useEffect(() => {
     const box = boxRef.current;
     if (!box || reduce) return;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        const canSound = navigator.userActivation?.hasBeenActive ?? false;
-        setSrcMuted(!canSound);
-        setMuted(!canSound);
-        setStarted(true);
+        if (navigator.userActivation?.hasBeenActive) setStarted(true);
         io.disconnect();
       },
       { threshold: 0.6 },
@@ -86,22 +71,6 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
     io.observe(box);
     return () => io.disconnect();
   }, [reduce]);
-
-  // While muted, the first click, tap or key press anywhere turns the sound on.
-  useEffect(() => {
-    if (!playing || !muted) return;
-    const onFirst = () => {
-      playerCommand(frameRef.current, "unMute");
-      playerCommand(frameRef.current, "setVolume", [100]);
-      setMuted(false);
-    };
-    window.addEventListener("pointerdown", onFirst, { once: true });
-    window.addEventListener("keydown", onFirst, { once: true });
-    return () => {
-      window.removeEventListener("pointerdown", onFirst);
-      window.removeEventListener("keydown", onFirst);
-    };
-  }, [playing, muted]);
 
   // Pause when the carousel scrolls out of view and resume when it returns.
   useEffect(() => {
@@ -139,18 +108,14 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
               {playing ? (
                 <iframe
                   ref={frameRef}
-                  src={`${PLAYER_ORIGIN}/embed/${v.youtubeId}?autoplay=1&mute=${srcMuted ? 1 : 0}&playsinline=1&rel=0&enablejsapi=1`}
+                  src={`${PLAYER_ORIGIN}/embed/${v.youtubeId}?autoplay=1&mute=0&playsinline=1&rel=0&enablejsapi=1`}
                   title={v.title}
                   allow="autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
                   className="absolute inset-0 size-full"
                 />
               ) : (
-                <button type="button" onClick={() => {
-                    setTapped(true);
-                    setSrcMuted(false);
-                    setMuted(false);
-                  }} className="group absolute inset-0">
+                <button type="button" onClick={() => setTapped(true)} className="group absolute inset-0">
                   <Image
                     src={youtubeThumb(v.youtubeId)}
                     alt=""
@@ -167,19 +132,6 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
               )}
             </motion.div>
           </AnimatePresence>
-          {playing && muted && (
-            <button
-              type="button"
-              onClick={unmute}
-              className="absolute right-4 top-4 z-10 inline-flex h-11 items-center gap-2 rounded-full bg-cream px-4 text-sm font-semibold text-stage shadow-lg transition-colors hover:bg-ochre"
-            >
-              <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <path d="M11 5 6 9H2v6h4l5 4V5z" />
-                <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" strokeLinecap="round" />
-              </svg>
-              Tap for sound
-            </button>
-          )}
         </div>
 
         {many && <div className="absolute right-3 top-1/2 -translate-y-1/2 md:static md:translate-y-0">{arrow(1)}</div>}
