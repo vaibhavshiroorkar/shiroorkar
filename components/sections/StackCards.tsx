@@ -22,22 +22,22 @@ function Card({ item, index, total, skinIndex, progress }: { item: StoryCard; in
     <div className="sticky" style={{ top: `calc(11vh + ${index * 22}px)` }}>
       <motion.article
         style={reduce ? undefined : { scale, transformOrigin: "50% 0%" }}
-        className={`grain grid min-h-[72vh] gap-8 overflow-hidden rounded-[28px] p-6 sm:p-10 md:grid-cols-2 md:items-stretch lg:p-14 ${skin.card}`}
+        className={`grain grid gap-6 overflow-hidden rounded-[28px] p-6 sm:p-10 md:min-h-[72vh] md:grid-cols-2 md:items-stretch md:gap-8 lg:p-14 ${skin.card}`}
       >
-        <div className="relative z-10 flex flex-col justify-between gap-10">
+        <div className="relative z-10 flex flex-col justify-between gap-6 md:gap-10">
           <p className="text-sm opacity-60">
             {index + 1} of {total}
           </p>
           <div>
-            <h3 className="display text-[clamp(3.5rem,9vw,8rem)]">
+            <h3 className="display text-[clamp(2.75rem,9vw,8rem)]">
               {item.title}
               <VerifyBadge status={item.status} note={item.note} />
             </h3>
-            <p className="mt-6 max-w-md text-lg leading-relaxed opacity-85">{item.lines}</p>
+            <p className="mt-4 max-w-md leading-relaxed opacity-85 md:mt-6 md:text-lg">{item.lines}</p>
             <SourceLink source={item.source} className="mt-5" />
           </div>
         </div>
-        <Photo image={item.image} tone={skin.tone} className="relative z-10 min-h-64 rounded-2xl" sizes="(min-width: 768px) 45vw, 100vw" />
+        <Photo image={item.image} tone={skin.tone} className="relative z-10 aspect-[4/3] rounded-2xl md:aspect-auto md:min-h-64" sizes="(min-width: 768px) 45vw, 100vw" />
       </motion.article>
     </div>
   );

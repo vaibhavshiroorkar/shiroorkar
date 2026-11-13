@@ -10,16 +10,16 @@ import { ArrowUpRight } from "@/components/ui/icons";
 
 function Overlay({ story, cards }: { story: Story; cards: StoryCard[] }) {
   return (
-    <div className="shell relative z-10 flex h-full flex-col justify-end pb-14 text-cream lg:pb-20">
-      <p className="display text-[clamp(4rem,14vw,13rem)]">{story.title}</p>
-      <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1fr_auto] md:items-end">
+    <div className="shell relative z-10 flex h-full flex-col justify-end pb-10 text-cream lg:pb-20">
+      <p className="display text-[clamp(3rem,13vw,13rem)]">{story.title}</p>
+      <div className="mt-5 grid gap-5 md:mt-8 md:grid-cols-[1fr_1fr_auto] md:items-end md:gap-8">
         {cards.map((c) => (
           <div key={c.title}>
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-lg font-semibold md:text-xl">
               {c.title}
               <VerifyBadge status={c.status} note={c.note} />
             </h3>
-            <p className="mt-2 max-w-sm leading-relaxed text-cream/80">{c.lines}</p>
+            <p className="mt-1 max-w-sm text-sm leading-relaxed text-cream/80 md:mt-2 md:text-base">{c.lines}</p>
             <SourceLink source={c.source} className="mt-2" />
           </div>
         ))}
@@ -66,7 +66,7 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
 
   return (
     <div ref={ref} className="relative h-[230vh]">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div style={{ clipPath }} className="absolute inset-0">
           <motion.div style={{ scale: imageScale }} className="absolute inset-0">
             {image && <Photo image={image} className="h-full" sizes="100vw" />}

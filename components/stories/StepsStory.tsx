@@ -64,7 +64,7 @@ export function StepsStory({ cards }: { cards: StoryCard[] }) {
             </li>
           ))}
         </ol>
-        <div className="shell sticky top-0 grid h-screen grid-cols-[1.1fr_1fr] items-center gap-16 py-20">
+        <div className="shell sticky top-0 grid h-[100svh] grid-cols-[1.1fr_1fr] items-center gap-16 py-20">
           <div className="relative h-[68vh] overflow-hidden rounded-[28px]">
             <AnimatePresence initial={false}>
               <motion.div

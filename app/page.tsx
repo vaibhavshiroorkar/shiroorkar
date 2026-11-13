@@ -38,7 +38,7 @@ export default function Home() {
             <h2 id={`${story.id}-title`} className="sr-only">
               {story.title}
             </h2>
-            <div className="shell pb-20 pt-28 sm:pt-36 lg:pb-28 lg:pt-48">
+            <div className="shell pb-12 pt-20 sm:pb-20 sm:pt-36 lg:pb-28 lg:pt-48">
               <WordReveal
                 className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
                 segments={story.statement}

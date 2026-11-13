@@ -46,7 +46,7 @@ export function ReelsRail({ reels, profile }: { reels: MediaItem[]; profile: { h
       aria-labelledby="reels-title"
       className={`relative bg-paper ${pinned ? "md:h-[260vh]" : ""}`}
     >
-      <div className={`flex flex-col justify-center overflow-hidden py-20 ${pinned ? "md:sticky md:top-0 md:h-screen md:py-0" : ""}`}>
+      <div className={`flex flex-col justify-center overflow-hidden py-20 ${pinned ? "md:sticky md:top-0 md:h-[100svh] md:py-0" : ""}`}>
         <div className="shell flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <h2 id="reels-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
             From the <span className="font-serif font-normal normal-case italic tracking-normal text-forest">field</span>

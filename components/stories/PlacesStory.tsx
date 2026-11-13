@@ -7,37 +7,29 @@ import type { Source } from "@/content/types";
 import { SourceLink, VerifyBadge } from "@/components/ui/Verify";
 
 /**
- * One giant place name. It drifts sideways as the page scrolls and fills in solid
- * green while it crosses the middle of the screen.
+ * One giant place name. Rows alternate left and right alignment inside the page
+ * margins, drift a little inward as the page scrolls (never past the edge), and
+ * fill in solid green while crossing the middle of the screen.
  */
 function PlaceRow({ name, index }: { name: string; index: number }) {
   const ref = useRef<HTMLLIElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const dir = index % 2 === 0 ? 1 : -1;
-  const x = useTransform(scrollYProgress, [0, 1], [`${dir * 10}%`, `${dir * -10}%`]);
+  const right = index % 2 === 1;
+  const x = useTransform(scrollYProgress, [0, 1], right ? ["0%", "-6%"] : ["0%", "6%"]);
   const fill = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, 1, 0]);
-  const text = "display whitespace-nowrap text-[clamp(3.5rem,12vw,11rem)]";
+  const text = "display block whitespace-nowrap text-[clamp(2.4rem,10.5vw,10rem)]";
+  const align = right ? "text-right" : "text-left";
 
   if (reduce) {
-    return (
-      <li className={`${text} text-stage`} style={{ paddingLeft: `${(index % 3) * 8}vw` }}>
-        {name}
-      </li>
-    );
+    return <li className={`${text} ${align} text-stage`}>{name}</li>;
   }
 
   return (
-    <li ref={ref} className="relative">
-      <motion.div style={{ x }} className="relative" >
-        <span className={`${text} block text-transparent [-webkit-text-stroke:1.5px_var(--color-stage)]`} style={{ paddingLeft: `${(index % 3) * 8}vw` }}>
-          {name}
-        </span>
-        <motion.span
-          aria-hidden
-          style={{ opacity: fill, paddingLeft: `${(index % 3) * 8}vw` }}
-          className={`${text} absolute inset-0 block text-forest`}
-        >
+    <li ref={ref} className={align}>
+      <motion.div style={{ x }} className="relative">
+        <span className={`${text} text-transparent [-webkit-text-stroke:1.5px_var(--color-stage)]`}>{name}</span>
+        <motion.span aria-hidden style={{ opacity: fill }} className={`${text} absolute inset-0 text-forest`}>
           {name}
         </motion.span>
       </motion.div>
@@ -55,7 +47,7 @@ export function PlacesStory({ story, cards }: { story: Story; cards: StoryCard[]
     <div className="pb-28 lg:pb-40">
       {places.length > 0 && (
         <div className="overflow-hidden">
-          <ul aria-label="Neighbourhoods" className="leading-[0.95]">
+          <ul aria-label="Neighbourhoods" className="shell leading-[0.95]">
             {places.map((p, i) => (
               <PlaceRow key={p.name} name={p.name} index={i} />
             ))}
