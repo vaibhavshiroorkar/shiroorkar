@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { useRef, type MouseEvent } from "react";
+import { scrollToTop } from "@/components/motion/SmoothScroll";
 import { site } from "@/content/site";
 import { Arrow } from "@/components/ui/icons";
 
@@ -14,13 +15,22 @@ export function Header() {
   const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const close = () => dialogRef.current?.close();
+
+  // On the homepage a link to "/" goes nowhere, so send the visitor back to the top instead.
+  const homeClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    close();
+    if (pathname === "/") {
+      e.preventDefault();
+      scrollToTop();
+    }
+  };
   const active = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4">
       <div className="shell">
         <div className="pointer-events-auto flex h-14 items-center justify-between gap-4 rounded-full bg-stage/80 pl-5 pr-2 text-cream shadow-[0_8px_30px_rgba(10,31,24,0.25)] backdrop-blur-md">
-          <Link href="/" className="display text-[22px] leading-none tracking-wide" aria-label="Shiroorkar, home">
+          <Link href="/" onClick={homeClick} className="display text-[22px] leading-none tracking-wide" aria-label="Shiroorkar, home">
             Shiroorkar
           </Link>
 
@@ -84,7 +94,7 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  onClick={close}
+                  onClick={item.href === "/" ? homeClick : close}
                   aria-current={pathname === item.href ? "page" : undefined}
                   className="display block py-1.5 text-[13vw] text-cream/90 transition-colors hover:text-ochre aria-[current=page]:text-ochre sm:text-7xl"
                 >
