@@ -7,33 +7,34 @@ async function Year() {
   return <>{new Date().getFullYear()}</>;
 }
 
+/*
+ * Two rows on desktop: logo and description share the first, copyright and socials
+ * the second, so each right-hand item lines up with its left-hand partner.
+ */
 export function Footer() {
   return (
     <footer className="bg-stage-deep text-sm text-cream/60">
-      <div className="shell flex flex-col gap-8 py-12 md:flex-row md:items-end md:justify-between">
-        <div>
-          <Link href="/" className="display text-4xl text-cream" aria-label="Shiroorkar, home">
-            Shiroorkar
-          </Link>
-          <p className="mt-3 text-xs text-cream/40">
-            &copy; <Year /> Shiroorkar
-          </p>
-        </div>
-        <div className="md:text-right">
-          <p className="max-w-xs leading-relaxed md:ml-auto">
-            The work and public voice of {site.person}. Speaking, workshops and environmental
-            collaborations.
-          </p>
-          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
-            {site.socials.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-cream">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="shell grid gap-x-10 gap-y-4 py-12 md:grid-cols-[auto_1fr] md:items-center">
+        <Link href="/" className="display text-4xl text-cream" aria-label="Shiroorkar, home">
+          Shiroorkar
+        </Link>
+        <p className="font-semibold leading-snug text-cream/85 md:text-right">
+          <span className="md:whitespace-nowrap">The work and public voice of {site.person}.</span>{" "}
+          <br className="hidden md:block" />
+          <span className="md:whitespace-nowrap">Speaking, workshops and environmental collaborations.</span>
+        </p>
+        <p className="order-last text-xs text-cream/40 md:order-none">
+          &copy; <Year /> Shiroorkar
+        </p>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
+          {site.socials.map((s) => (
+            <li key={s.url}>
+              <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-cream">
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   );
