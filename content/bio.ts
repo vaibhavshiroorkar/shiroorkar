@@ -83,7 +83,7 @@ export const story: ({ heading: string; paragraphs: string[] } & Verifiable)[] =
     heading: "From the ward to the screen",
     paragraphs: [
       "The story became the Marathi feature film Ata Thambaycha Naay! (\"Now we won't stop\"), released in theatres on 1 May 2025. Shivraj Waichal directed it, and Ashutosh Gowariker plays Udaykumar.",
-      "He was reluctant at first when the producers approached him. The film went on to win Best Film at the Filmfare Awards Marathi.",
+      "The film went on to win Best Film at the Filmfare Awards Marathi.",
     ],
     status: "sourced",
     source: sources.wikiFilm,
