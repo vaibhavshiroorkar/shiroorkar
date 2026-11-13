@@ -26,51 +26,29 @@ function playerCommand(frame: HTMLIFrameElement | null, func: string, args: unkn
 /**
  * One interview at a time, with an arrow on each side.
  *
- * Nothing loads from YouTube until the visitor reaches the carousel. A video only
- * starts on its own when it can play with sound, which browsers allow once the
- * visitor has clicked or tapped the page. Otherwise it waits on its thumbnail for
- * the visitor to press play. It never plays muted. Pressing an arrow counts as a
- * click, so the next video starts with sound. The video pauses when scrolled away
- * and resumes on return. Readers who prefer reduced motion always press play.
+ * No autoplay: each video waits on its thumbnail until the visitor presses play,
+ * so it always plays with sound. Nothing loads from YouTube before that. Arrows
+ * switch to the next thumbnail. A playing video pauses when scrolled away and
+ * resumes on return.
  */
 export function InterviewCarousel({ items }: { items: Interview[] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [tapped, setTapped] = useState(false);
-  const [started, setStarted] = useState(false);
   const reduce = useReducedMotion();
   const boxRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLIFrameElement>(null);
   const visible = useInView(boxRef, { amount: 0.3 });
-  const playing = tapped || started;
+  const playing = tapped;
   const v = items[index];
   const many = items.length > 1;
 
   const go = (dir: 1 | -1) => {
     setDirection(dir);
-    // The arrow press is a click, so the next video may start with sound.
-    setStarted(!reduce);
-    // Reduced-motion readers go back to the thumbnail; everyone else autoplays the next video.
+    // The next video waits on its thumbnail for the visitor to press play.
     setTapped(false);
     setIndex((i) => (i + dir + items.length) % items.length);
   };
-
-  // Start the first time the carousel is mostly on screen, but only if it can play
-  // with sound: the visitor must already have interacted with the page.
-  useEffect(() => {
-    const box = boxRef.current;
-    if (!box || reduce) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        if (navigator.userActivation?.hasBeenActive) setStarted(true);
-        io.disconnect();
-      },
-      { threshold: 0.6 },
-    );
-    io.observe(box);
-    return () => io.disconnect();
-  }, [reduce]);
 
   // Pause when the carousel scrolls out of view and resume when it returns.
   useEffect(() => {
