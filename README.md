@@ -100,6 +100,6 @@ touch that site as long as the root domain records stay as they are.
    URL.
 4. Check the `*.vercel.app` preview. Set `NEXT_PUBLIC_SHOW_PENDING=true` on preview deploys if
    you want to see placeholders.
-5. When ready, add `uday.shiroorkar.com` in Vercel (Project, Settings, Domains). In Cloudflare
-   add one record: `CNAME uday -> cname.vercel-dns.com`, proxy status **DNS only**. Do not edit
+5. When ready, add `udaykumar.shiroorkar.com` in Vercel (Project, Settings, Domains). In Cloudflare
+   add one record: `CNAME udaykumar -> cname.vercel-dns.com`, proxy status **DNS only**. Do not edit
    the root `shiroorkar.com` or `www` records.

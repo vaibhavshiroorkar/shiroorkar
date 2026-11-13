@@ -49,9 +49,19 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: site.person,
+  // Press and search use several spellings; listing them helps search engines connect them.
+  alternateName: ["Uday Shirurkar", "Udaykumar Shirurkar", "Uday Shiroorkar", "Udaykumar I.R. Shiroorkar"],
+  description:
+    "Retired Assistant Municipal Commissioner of the Brihanmumbai Municipal Corporation, advocate and environmental worker, known as the BMC's Singham.",
   url: site.url,
-  jobTitle: "Retired Assistant Municipal Commissioner",
+  jobTitle: "Retired Assistant Municipal Commissioner, Brihanmumbai Municipal Corporation",
   sameAs: site.socials.map((s) => s.url),
+  subjectOf: {
+    "@type": "Movie",
+    name: "Ata Thambaycha Naay!",
+    datePublished: "2025-05-01",
+    sameAs: "https://en.wikipedia.org/wiki/Ata_Thambaycha_Naay!",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

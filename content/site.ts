@@ -2,7 +2,7 @@ export const site = {
   brand: "Shiroorkar",
   person: "Udaykumar Shiroorkar",
   firstName: "Udaykumar",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://uday.shiroorkar.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://udaykumar.shiroorkar.com",
   description:
     "The work, journey and initiatives of Udaykumar Shiroorkar: environmental responsibility, public service and community impact. Get in touch about talks, workshops, collaborations or a visit.",
   email: "shiroorkarur@gmail.com",

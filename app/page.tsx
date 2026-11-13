@@ -8,13 +8,32 @@ import { RevealStory } from "@/components/stories/RevealStory";
 import { StepsStory } from "@/components/stories/StepsStory";
 import { SourceLink } from "@/components/ui/Verify";
 import { heroCutout, stories } from "@/content/bio";
-import { interviews } from "@/content/interviews";
+import { interviews, youtubeThumb, youtubeUrl } from "@/content/interviews";
 import { publishable } from "@/lib/publish";
+
+// Lets the interviews appear in video search results.
+const videoJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": interviews.map((v) => ({
+    "@type": "VideoObject",
+    name: v.title,
+    description: `${v.channel}${v.detail ? `: ${v.detail}` : ""}. An interview with Udaykumar Shiroorkar.`,
+    thumbnailUrl: youtubeThumb(v.youtubeId),
+    uploadDate: v.uploadDate,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${v.youtubeId}`,
+    url: youtubeUrl(v.youtubeId),
+  })),
+};
 
 export default function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // Static data from content/interviews.ts; escaping "<" keeps it from closing the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd).replace(/</g, "\u003c") }}
+      />
       <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} />
 
       {/* Interviews */}

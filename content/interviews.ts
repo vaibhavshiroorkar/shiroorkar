@@ -9,35 +9,42 @@ export type Interview = {
   channel: string;
   /** Short context line, e.g. series, episode or language. */
   detail?: string;
+  /** YouTube upload date (YYYY-MM-DD); search engines need it for video results. */
+  uploadDate: string;
 };
 
 export const interviews: Interview[] = [
   {
     youtubeId: "ukV0-lD8S08",
+    uploadDate: "2026-07-29",
     title: "Service Beyond Duty: In Conversation With Udaykumar Shiroorkar",
     channel: "ABP Live",
     detail: "Lead Inc. series",
   },
   {
     youtubeId: "8GJY2q6TRNo",
+    uploadDate: "2024-12-21",
     title: "Meet BMC's Demolition Man: Udaykumar Shiroorkar's Journey to the Big Screen",
     channel: "Lokmat Times",
     detail: "Dongri, Madanpura and Mohammed Ali Road",
   },
   {
     youtubeId: "ksFRHdB_xPA",
+    uploadDate: "2026-01-14",
     title: "BMC मध्ये रात्रपाळीचं काम कायमचं का बंद झालं?",
     channel: "Marathi Mood",
     detail: "Podcast episode 21, part 2. Why the BMC's night-shift work ended for good (Marathi)",
   },
   {
     youtubeId: "rdG3LwcGzEU",
+    uploadDate: "2018-07-11",
     title: "Assistant Commissioner (Retd.) Udaykumar Shiroorkar interview",
     channel: "Janta Vrutta",
     detail: "Marathi",
   },
   {
     youtubeId: "R7bqKX61mr8",
+    uploadDate: "2026-02-28",
     title: "Ordinary People, Extraordinary Achievements",
     channel: "ABP News",
     detail: "Ideas of India Summit 2026, panel with Rohan Mahajan",
