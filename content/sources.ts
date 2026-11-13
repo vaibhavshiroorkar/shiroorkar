@@ -33,6 +33,14 @@ export const sources = {
     label: "His Facebook page",
     url: "https://www.facebook.com/udaykumar.shiroorkar/",
   },
+  abpLeadInc: {
+    label: "ABP Live, Lead Inc.",
+    url: "https://www.youtube.com/watch?v=ukV0-lD8S08",
+  },
+  abpIdeas2026: {
+    label: "ABP Ideas of India 2026",
+    url: "https://www.abpideasofindia.com/sessions",
+  },
   prahaar2025: {
     label: "Prahaar, May 2025 (Marathi)",
     url: "https://prahaar.in/2025/05/01/udaykumar-shiroorkar-said-there-are-problems-find-solutions/",

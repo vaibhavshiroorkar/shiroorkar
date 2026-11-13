@@ -1,6 +1,7 @@
 import { CutoutHero } from "@/components/hero/CutoutHero";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { InterviewCarousel } from "@/components/sections/InterviewCarousel";
+import { StackCards } from "@/components/sections/StackCards";
 import { CallStory } from "@/components/stories/CallStory";
 import { PlacesStory } from "@/components/stories/PlacesStory";
 import { RevealStory } from "@/components/stories/RevealStory";
@@ -44,6 +45,11 @@ export default function Home() {
               />
               <SourceLink source={story.source} className="mt-6" />
             </div>
+            {story.layout === "cards" && (
+              <div className="shell pb-28 lg:pb-40">
+                <StackCards items={cards} />
+              </div>
+            )}
             {story.layout === "steps" && <StepsStory cards={cards} />}
             {story.layout === "places" && <PlacesStory story={story} cards={cards} />}
             {story.layout === "call" && <CallStory cards={cards} />}

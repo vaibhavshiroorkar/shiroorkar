@@ -25,12 +25,13 @@ export type StoryCard = { title: string; lines: string; image: ImageRef } & Veri
 /**
  * How a story is presented after its sentence. Each story gets its own so the
  * homepage never repeats itself:
+ * cards:  stacking cards that slide over each other
  * steps:  a pinned sequence, one step at a time beside a photo
  * places: giant drifting place names, then the facts
  * call:   a phone mid-call to the ward helpline, beside the facts
  * reveal: a photo window that grows to fill the screen
  */
-export type StoryLayout = "steps" | "places" | "call" | "reveal";
+export type StoryLayout = "cards" | "steps" | "places" | "call" | "reveal";
 
 /** A homepage story: one sentence that lights up on scroll, then its own layout. */
 export type Story = {
@@ -55,7 +56,7 @@ export const stories: Story[] = [
   {
     id: "second-chances",
     title: "Second chances",
-    layout: "steps",
+    layout: "cards",
     statement: [
       { text: "He asked the people who clean Mumbai to go back to school." },
       { text: "Twenty-three of them passed.", accent: true },
@@ -176,6 +177,40 @@ export const stories: Story[] = [
         image: photo("Residents or a ward awareness event, 4:3"),
         status: "sourced",
         source: sources.dna2017,
+      },
+    ],
+  },
+  {
+    id: "recognition",
+    title: "Recognition",
+    layout: "steps",
+    statement: [
+      { text: "The ward officer Mumbai called Singham" },
+      { text: "now speaks on national stages.", accent: true },
+    ],
+    cards: [
+      {
+        title: "Real hero",
+        lines:
+          "When Ata Thambaycha Naay! opened in May 2025, Prahaar welcomed him to its Mumbai office and honoured him as the film's real hero.",
+        image: photo("At the Prahaar office or the premiere, 4:3"),
+        status: "sourced",
+        source: sources.prahaar2025,
+      },
+      {
+        title: "Service beyond duty",
+        lines: "ABP Live's Lead Inc. series sat down with him for a conversation on public service titled Service Beyond Duty.",
+        image: photo("Frame from the ABP Live interview, 4:3"),
+        status: "sourced",
+        source: sources.abpLeadInc,
+      },
+      {
+        title: "Ideas of India",
+        lines:
+          "In February 2026 he joined the ABP Ideas of India Summit on a panel titled Ordinary People, Extraordinary Achievements.",
+        image: photo("On stage at Ideas of India, 4:3"),
+        status: "sourced",
+        source: sources.abpIdeas2026,
       },
     ],
   },

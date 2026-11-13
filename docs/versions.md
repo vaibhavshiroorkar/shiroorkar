@@ -144,7 +144,8 @@ Built on v2 after going back from v3.
 
 Same design as v4, but each story now has its own layout after its sentence:
 
-- **Second chances:** a pinned sequence. The photo cross-fades while the step text changes beside it.
+- **Second chances:** stacking cards, kept from v4 because they suited the opening story.
+- **Recognition:** a pinned sequence (Prahaar, ABP Live, ABP Ideas of India). The photo cross-fades while the step text changes beside it.
 - **Public space:** giant neighbourhood names drift sideways and fill in green, followed by four facts.
 - **Clean city:** a phone mid-call to the B Ward helpline, with the planned messages cycling.
 - **Nisarg Rakshak:** a photo window that grows to fill the screen, with his title and Reels link over it.
