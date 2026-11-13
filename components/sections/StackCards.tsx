@@ -19,7 +19,7 @@ function Card({ item, index, total, skinIndex, progress }: { item: StoryCard; in
   const scale = useTransform(progress, [index / total, 1], [1, 1 - (total - index - 1) * 0.04]);
   const skin = skins[skinIndex % skins.length];
   return (
-    <div className="sticky" style={{ top: `calc(11vh + ${index * 22}px)` }}>
+    <div className="sticky" style={{ top: `calc(11svh + ${index * 22}px)` }}>
       <motion.article
         style={reduce ? undefined : { scale, transformOrigin: "50% 0%" }}
         className={`grain grid gap-6 overflow-hidden rounded-[28px] p-6 sm:p-10 md:min-h-[72vh] md:grid-cols-2 md:items-stretch md:gap-8 lg:p-14 ${skin.card}`}
@@ -48,7 +48,7 @@ export function StackCards({ items, skinOffset = 0 }: { items: StoryCard[]; skin
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   return (
-    <div ref={ref} className="relative flex flex-col gap-[14vh] pb-[6vh]">
+    <div ref={ref} className="relative flex flex-col gap-[14svh] pb-[6svh]">
       {items.map((item, i) => (
         <Card key={item.title} item={item} index={i} total={items.length} skinIndex={i + skinOffset} progress={scrollYProgress} />
       ))}

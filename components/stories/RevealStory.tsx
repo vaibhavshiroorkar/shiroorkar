@@ -65,7 +65,7 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
   }
 
   return (
-    <div ref={ref} className="relative h-[230vh]">
+    <div ref={ref} className="relative h-[160svh] md:h-[230svh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div style={{ clipPath }} className="absolute inset-0">
           <motion.div style={{ scale: imageScale }} className="absolute inset-0">
