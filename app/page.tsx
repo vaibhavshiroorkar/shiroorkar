@@ -2,8 +2,6 @@ import { CutoutHero } from "@/components/hero/CutoutHero";
 import { Reveal } from "@/components/motion/Reveal";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { InterviewCarousel } from "@/components/sections/InterviewCarousel";
-import { Marquee } from "@/components/sections/Marquee";
-import { ProgrammeList } from "@/components/sections/ProgrammeList";
 import { ReelsRail } from "@/components/sections/ReelsRail";
 import { StackCards } from "@/components/sections/StackCards";
 import { Pill } from "@/components/ui/Pill";
@@ -11,7 +9,6 @@ import { SourceLink } from "@/components/ui/Verify";
 import { heroCutout, stories } from "@/content/bio";
 import { interviews } from "@/content/interviews";
 import { media } from "@/content/media";
-import { offerings } from "@/content/offerings";
 import { instagram, site } from "@/content/site";
 import { publishable } from "@/lib/publish";
 
@@ -26,7 +23,7 @@ export default function Home() {
       {interviews.length > 0 && (
         <section aria-labelledby="interviews-title" className="shell pt-28 lg:pt-40">
           <h2 id="interviews-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
-            In <span className="font-serif font-normal normal-case italic tracking-normal text-forest">conversation</span>
+            In his <span className="font-serif font-normal normal-case italic tracking-normal text-forest">words</span>
           </h2>
           <div className="mt-6">
             <InterviewCarousel items={interviews} />
@@ -72,25 +69,6 @@ export default function Home() {
         </section>
       )}
 
-      <Marquee items={["Free Press Journal", "Ata Thambaycha Naay!", "Best Film, Filmfare Awards Marathi", "Instagram @udaykumarshiroorkar"]} />
-
-      {/* Speaking */}
-      <section aria-labelledby="speak-title" className="shell py-28 lg:py-40">
-        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <h2 id="speak-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
-            On your <span className="font-serif font-normal normal-case italic tracking-normal text-forest">stage</span>
-          </h2>
-          <p className="max-w-sm text-lg text-stone">
-            Talks, workshops and programmes for companies, colleges, schools and communities.
-          </p>
-        </div>
-        <ProgrammeList offerings={offerings} />
-        <div className="mt-10">
-          <Pill href="/speaking" tone="outline-ink">
-            All programmes
-          </Pill>
-        </div>
-      </section>
 
       {/* Closing */}
       <section className="grain relative overflow-hidden bg-stage text-cream">

@@ -13,12 +13,6 @@ export type Interview = {
 
 export const interviews: Interview[] = [
   {
-    youtubeId: "R7bqKX61mr8",
-    title: "Ordinary People, Extraordinary Achievements",
-    channel: "ABP News",
-    detail: "Ideas of India Summit 2026, panel with Rohan Mahajan",
-  },
-  {
     youtubeId: "ukV0-lD8S08",
     title: "Service Beyond Duty: In Conversation With Udaykumar Shiroorkar",
     channel: "ABP Live",
@@ -41,6 +35,12 @@ export const interviews: Interview[] = [
     title: "Assistant Commissioner (Retd.) Udaykumar Shiroorkar interview",
     channel: "Janta Vrutta",
     detail: "Marathi",
+  },
+  {
+    youtubeId: "R7bqKX61mr8",
+    title: "Ordinary People, Extraordinary Achievements",
+    channel: "ABP News",
+    detail: "Ideas of India Summit 2026, panel with Rohan Mahajan",
   },
 ];
 

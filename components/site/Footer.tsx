@@ -9,17 +9,13 @@ async function Year() {
 
 export function Footer() {
   return (
-    <footer className="bg-stage-deep text-cream/70">
-      <div className="shell grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div>
-          <p className="display text-5xl text-cream">Shiroorkar</p>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed">
-            The work and public voice of {site.person}. Speaking, workshops and environmental
-            collaborations.
-          </p>
-        </div>
-        <nav aria-label="Footer" className="text-sm">
-          <ul className="space-y-2.5">
+    <footer className="bg-stage-deep text-sm text-cream/60">
+      <div className="shell flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
+        <Link href="/" className="display text-2xl text-cream" aria-label="Shiroorkar, home">
+          Shiroorkar
+        </Link>
+        <nav aria-label="Footer">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {site.nav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="hover:text-cream">
@@ -27,37 +23,20 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/work-with-us" className="hover:text-cream">
-                Invite
-              </Link>
-            </li>
+            {site.socials.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-cream">
+                  {s.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
-        <ul className="space-y-2.5 text-sm">
-          {site.socials.map((s) => (
-            <li key={s.url}>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:text-cream">
-                {s.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a href={`mailto:${site.email}`} className="break-all hover:text-cream">
-              {site.email}
-            </a>
-          </li>
-        </ul>
       </div>
-      <div className="shell flex flex-col gap-2 border-t border-cream/10 py-6 text-xs text-cream/50 md:flex-row md:justify-between">
-        <p>
-          &copy; <Year /> Shiroorkar
-        </p>
-        <p className="max-w-xl md:text-right">
-          Engagements arranged here are kept separate from any non-profit or voluntary work. No
-          legal services are offered through this website.
-        </p>
-      </div>
+      <p className="shell border-t border-cream/10 py-5 text-xs text-cream/45">
+        &copy; <Year /> Shiroorkar. No legal services are offered here; engagements are kept separate from
+        any non-profit work.
+      </p>
     </footer>
   );
 }
