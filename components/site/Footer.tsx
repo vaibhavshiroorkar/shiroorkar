@@ -29,7 +29,7 @@ export function Footer() {
             ))}
             <li>
               <Link href="/work-with-us" className="hover:text-cream">
-                Work with us
+                Invite
               </Link>
             </li>
           </ul>

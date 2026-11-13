@@ -10,7 +10,7 @@ import { Arrow } from "@/components/ui/icons";
 
 type State = "idle" | "sending" | "sent" | "not-configured" | "failed" | "rate-limited";
 
-/** Reads ?type= and ?topic= so CTAs elsewhere can preselect the inquiry. Needs a Suspense boundary. */
+/** Reads ?type= and ?topic= so links elsewhere can preselect the topic. Needs a Suspense boundary. */
 export function InquiryFormFromParams() {
   const params = useSearchParams();
   const raw = params.get("type");
@@ -21,7 +21,7 @@ export function InquiryFormFromParams() {
 }
 
 const field =
-  "mt-2 block w-full rounded-2xl border border-ink/10 bg-card px-5 py-4 text-base outline-none transition-colors placeholder:text-ink/35 focus:border-forest focus:ring-2 focus:ring-forest/20 aria-[invalid=true]:border-red-700";
+  "block w-full border-0 border-b border-ink/20 bg-transparent px-0 py-3 text-lg outline-none transition-colors placeholder:text-ink/30 focus:border-forest aria-[invalid=true]:border-red-700";
 
 export function InquiryForm({ defaultType, topic = "" }: { defaultType?: InquiryTypeId; topic?: string }) {
   const [state, setState] = useState<State>("idle");
@@ -67,17 +67,16 @@ export function InquiryForm({ defaultType, topic = "" }: { defaultType?: Inquiry
 
   if (state === "sent") {
     return (
-      <div role="status" className="grain relative overflow-hidden rounded-[28px] bg-stage p-10 text-cream">
-        <p className="display relative z-10 text-6xl">Thank you</p>
-        <p className="relative z-10 mt-4 max-w-md text-cream/80">
-          Your message has reached us. We read every inquiry personally and will reply by email.
-        </p>
+      <div role="status" className="py-10">
+        <p className="display text-6xl text-stage">Thank you</p>
+        <p className="mt-4 max-w-sm text-lg text-stone">Your message has reached us. We will reply by email.</p>
       </div>
     );
   }
 
+  const typeLabel = inquiryTypes.find((t) => t.id === draft?.type)?.label ?? "";
   const fallback = draft
-    ? `Name: ${draft.name}\nOrganisation: ${draft.organization}\nPhone: ${draft.phone}\nInquiry: ${draft.type}\n\n${draft.message}`
+    ? `Name: ${draft.name}\nOrganisation: ${draft.organization}\nTopic: ${typeLabel}\n\n${draft.message}`
     : "";
   const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`Inquiry from ${draft?.name ?? "website"}`)}&body=${encodeURIComponent(fallback)}`;
   const wa = whatsappLink(fallback);
@@ -91,15 +90,9 @@ export function InquiryForm({ defaultType, topic = "" }: { defaultType?: Inquiry
     "aria-invalid": errors[n] ? true : undefined,
     "aria-describedby": errors[n] ? `${n}-error` : undefined,
   });
-  const label = "text-sm font-semibold";
 
   return (
-    <form onSubmit={onSubmit} noValidate className="relative grid gap-6 sm:grid-cols-2">
-      {topicName && (
-        <p className="rounded-2xl bg-forest/10 px-5 py-3 text-sm sm:col-span-2">
-          Asking about <strong className="font-semibold">{topicName}</strong>
-        </p>
-      )}
+    <form onSubmit={onSubmit} noValidate className="relative grid gap-8">
       <input type="hidden" name="topic" value={topic} />
       <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>
@@ -108,81 +101,77 @@ export function InquiryForm({ defaultType, topic = "" }: { defaultType?: Inquiry
         </label>
       </div>
 
-      <div>
-        <label htmlFor="name" className={label}>Name</label>
-        <input id="name" name="name" autoComplete="name" required className={field} {...aria("name")} />
-        {err("name")}
-      </div>
-      <div>
-        <label htmlFor="organization" className={label}>Organisation <span className="font-normal text-stone">(optional)</span></label>
-        <input id="organization" name="organization" autoComplete="organization" className={field} />
-      </div>
-      <div>
-        <label htmlFor="email" className={label}>Email</label>
-        <input id="email" name="email" type="email" autoComplete="email" required className={field} {...aria("email")} />
-        {err("email")}
-      </div>
-      <div>
-        <label htmlFor="phone" className={label}>Phone <span className="font-normal text-stone">(optional)</span></label>
-        <input id="phone" name="phone" type="tel" autoComplete="tel" className={field} {...aria("phone")} />
-        {err("phone")}
-      </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="type" className={label}>What is it about?</label>
-        <select id="type" name="type" required defaultValue={defaultType ?? ""} className={`${field} cursor-pointer`} {...aria("type")}>
-          <option value="" disabled>
-            Choose one
-          </option>
+      <fieldset aria-describedby={errors.type ? "type-error" : undefined}>
+        <legend className="text-sm text-stone">
+          {topicName ? (
+            <>
+              About <strong className="font-semibold text-ink">{topicName}</strong>
+            </>
+          ) : (
+            "What is it about?"
+          )}
+        </legend>
+        <div className="mt-3 flex flex-wrap gap-2">
           {inquiryTypes.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.title}
-            </option>
+            <label key={t.id} className="cursor-pointer">
+              <input type="radio" name="type" value={t.id} defaultChecked={t.id === defaultType} className="peer sr-only" />
+              <span className="inline-flex h-11 items-center rounded-full border border-ink/15 px-5 text-sm font-medium transition-colors hover:border-ink peer-checked:border-stage peer-checked:bg-stage peer-checked:text-cream peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ochre">
+                {t.label}
+              </span>
+            </label>
           ))}
-        </select>
+        </div>
         {err("type")}
+      </fieldset>
+
+      <div className="grid gap-8 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className="sr-only">Name</label>
+          <input id="name" name="name" autoComplete="name" placeholder="Your name" className={field} {...aria("name")} />
+          {err("name")}
+        </div>
+        <div>
+          <label htmlFor="email" className="sr-only">Email</label>
+          <input id="email" name="email" type="email" autoComplete="email" placeholder="Email" className={field} {...aria("email")} />
+          {err("email")}
+        </div>
       </div>
-      <div className="sm:col-span-2">
-        <label htmlFor="message" className={label}>Message</label>
-        <textarea
-          id="message"
-          name="message"
-          rows={6}
-          required
-          placeholder="The audience, a rough date and the city."
-          className={`${field} resize-y`}
-          {...aria("message")}
-        />
+      <div>
+        <label htmlFor="organization" className="sr-only">Organisation (optional)</label>
+        <input id="organization" name="organization" autoComplete="organization" placeholder="Organisation (optional)" className={field} />
+      </div>
+      <div>
+        <label htmlFor="message" className="sr-only">Message</label>
+        <textarea id="message" name="message" rows={4} placeholder="What do you have in mind? Audience, date and city help." className={`${field} resize-none`} {...aria("message")} />
         {err("message")}
       </div>
-      <div className="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-stone">We use your details only to reply to this inquiry.</p>
-        <button
-          type="submit"
-          disabled={state === "sending"}
-          className="group inline-flex h-14 items-center justify-center gap-3 rounded-full bg-stage px-8 font-semibold text-cream transition-colors hover:bg-forest disabled:opacity-60"
-        >
-          {state === "sending" ? "Sending..." : "Send inquiry"}
-          <Arrow className="size-4 transition-transform group-hover:translate-x-1" />
-        </button>
-      </div>
-      <div aria-live="polite" className="sm:col-span-2">
+
+      <button
+        type="submit"
+        disabled={state === "sending"}
+        className="group inline-flex h-14 items-center justify-center gap-3 justify-self-start rounded-full bg-stage px-8 font-semibold text-cream transition-colors hover:bg-forest disabled:opacity-60"
+      >
+        {state === "sending" ? "Sending..." : "Send"}
+        <Arrow className="size-4 transition-transform group-hover:translate-x-1" />
+      </button>
+
+      <div aria-live="polite">
         {(state === "not-configured" || state === "failed" || state === "rate-limited") && (
-          <div className="rounded-[24px] bg-ochre/20 p-6">
+          <div className="rounded-2xl bg-ochre/20 p-5 text-sm">
             <p className="font-semibold">
               {state === "not-configured"
-                ? "Online sending is not switched on yet, so your message has not been sent."
+                ? "Online sending is not on yet, so this was not sent."
                 : state === "rate-limited"
-                  ? "Too many messages from this connection. Please try again later."
-                  : "Something went wrong and your message was not sent."}
+                  ? "Too many messages from this connection. Please try later."
+                  : "Something went wrong, so this was not sent."}
             </p>
-            <p className="mt-1 text-stone">You can send the same message directly:</p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <a href={mailto} className="inline-flex h-12 items-center rounded-full bg-stage px-6 font-semibold text-cream">
-                Send by email
+            <div className="mt-3 flex flex-wrap gap-3">
+              <a href={mailto} className="inline-flex h-11 items-center rounded-full bg-stage px-5 font-semibold text-cream">
+                Send by email instead
               </a>
               {wa && (
-                <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center rounded-full border border-ink/25 px-6 font-semibold">
-                  Send on WhatsApp
+                <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center rounded-full border border-ink/25 px-5 font-semibold">
+                  WhatsApp
                 </a>
               )}
             </div>

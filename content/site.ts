@@ -25,8 +25,8 @@ export const site = {
   ],
   nav: [
     { href: "/about", label: "About" },
-    { href: "/work", label: "Environmental Work" },
-    { href: "/media", label: "Reels & Media" },
+    { href: "/work", label: "Work" },
+    { href: "/media", label: "Media" },
     { href: "/speaking", label: "Speaking" },
     { href: "/contact", label: "Contact" },
   ],

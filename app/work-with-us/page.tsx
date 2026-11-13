@@ -1,62 +1,49 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Suspense } from "react";
 import { InquiryForm, InquiryFormFromParams } from "@/components/sections/InquiryForm";
-import { PageHeader } from "@/components/site/PageHeader";
-import { Arrow } from "@/components/ui/icons";
-import { inquiryTypes } from "@/content/inquiryTypes";
-import { site } from "@/content/site";
+import { ArrowUpRight } from "@/components/ui/icons";
+import { instagram, site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Work With Us",
+  title: "Invite",
   description:
-    "Invite Udaykumar Shiroorkar to speak, organise an environmental workshop, discuss a project or explore a partnership.",
+    "Invite Udaykumar Shiroorkar to speak, run a workshop, or work with you on an environmental project.",
   alternates: { canonical: "/work-with-us" },
 };
 
 export default function WorkWithUsPage() {
   return (
-    <>
-      <PageHeader title="Work" accent="together" intro="Pick what you have in mind, or just write to us. Every inquiry is read and answered personally." />
-
-      <section className="shell py-16 lg:py-24">
-        <h2 className="sr-only">Ways to work together</h2>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {inquiryTypes.map((t) => (
-            <li key={t.id}>
-              <Link
-                href={`/work-with-us?type=${t.id}#inquiry`}
-                scroll={false}
-                className="group flex h-full flex-col justify-between gap-10 rounded-[24px] bg-card p-6 transition-colors hover:bg-stage hover:text-cream"
-              >
-                <span className="text-xl font-semibold leading-snug tracking-tight">{t.title}</span>
-                <span className="flex items-end justify-between gap-4 text-sm text-stone group-hover:text-cream/70">
-                  {t.description}
-                  <Arrow className="size-5 shrink-0 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section id="inquiry" className="shell grid scroll-mt-24 gap-12 pb-28 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div>
-          <h2 className="display text-[clamp(3.5rem,8vw,7rem)] text-stage">
-            Tell us <span className="font-serif font-normal normal-case italic tracking-normal text-forest">about it</span>
-          </h2>
-          <p className="mt-6 max-w-sm text-lg text-stone">
-            A few lines are enough. Fees and formats are agreed per engagement; nothing is booked or
-            paid online.
+    <section className="grain relative min-h-svh overflow-hidden bg-stage text-cream">
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_60%_at_15%_10%,rgba(198,154,90,0.16),transparent_70%)]" />
+      <div className="shell relative z-10 grid gap-12 pb-20 pt-32 lg:grid-cols-[1fr_1.15fr] lg:gap-20 lg:pb-28 lg:pt-40">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <h1 className="display text-[clamp(4.5rem,13vw,10rem)]">
+            Let&apos;s <span className="font-serif font-normal normal-case italic tracking-normal text-ochre">talk</span>
+          </h1>
+          <p className="mt-6 max-w-sm text-lg text-cream/75">
+            Talks, workshops, projects or press. Every message gets a personal reply.
           </p>
-          <a href={`mailto:${site.email}`} className="mt-8 inline-block break-all text-lg font-semibold text-forest underline underline-offset-4">
-            {site.email}
-          </a>
+          <ul className="mt-10 space-y-3 text-lg">
+            <li>
+              <a href={`mailto:${site.email}`} className="break-all underline-offset-4 hover:underline">
+                {site.email}
+              </a>
+            </li>
+            <li>
+              <a href={instagram.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 underline-offset-4 hover:underline">
+                {instagram.handle} <ArrowUpRight className="size-4" />
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </li>
+          </ul>
         </div>
-        <Suspense fallback={<InquiryForm />}>
-          <InquiryFormFromParams />
-        </Suspense>
-      </section>
-    </>
+
+        <div id="inquiry" className="scroll-mt-28 rounded-[28px] bg-paper p-6 text-ink sm:p-10">
+          <Suspense fallback={<InquiryForm />}>
+            <InquiryFormFromParams />
+          </Suspense>
+        </div>
+      </div>
+    </section>
   );
 }

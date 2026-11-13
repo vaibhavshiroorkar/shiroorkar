@@ -45,7 +45,7 @@ export function Header() {
               href="/work-with-us"
               className="group hidden h-10 items-center gap-2 rounded-full bg-ochre px-5 text-sm font-semibold text-stage transition-colors hover:bg-cream sm:inline-flex"
             >
-              Work with us
+              Invite
               <Arrow className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <button
@@ -98,7 +98,7 @@ export function Header() {
             onClick={close}
             className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-ochre font-semibold text-stage"
           >
-            Work with us <Arrow />
+            Invite <Arrow />
           </Link>
         </nav>
       </dialog>
