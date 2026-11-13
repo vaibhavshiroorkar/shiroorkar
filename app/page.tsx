@@ -1,5 +1,4 @@
 import { CutoutHero } from "@/components/hero/CutoutHero";
-import { CountUp } from "@/components/motion/CountUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { Marquee } from "@/components/sections/Marquee";
@@ -7,9 +6,7 @@ import { ProgrammeList } from "@/components/sections/ProgrammeList";
 import { ReelsRail } from "@/components/sections/ReelsRail";
 import { StackCards } from "@/components/sections/StackCards";
 import { Pill } from "@/components/ui/Pill";
-import { SourceLink, VerifyBadge } from "@/components/ui/Verify";
 import { chapters, heroCutout } from "@/content/bio";
-import { impact } from "@/content/impact";
 import { media } from "@/content/media";
 import { offerings } from "@/content/offerings";
 import { instagram, site } from "@/content/site";
@@ -17,7 +14,6 @@ import { publishable } from "@/lib/publish";
 
 export default function Home() {
   const reels = publishable(media).filter((m) => m.kind === "reel");
-  const stats = publishable(impact);
   const latest = reels[0] ? { title: reels[0].title, url: reels[0].url } : { title: instagram.handle, url: instagram.url };
 
   return (
@@ -25,7 +21,7 @@ export default function Home() {
       <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} latest={latest} />
 
       {/* Statement */}
-      <section className="shell pb-16 pt-28 sm:pt-36 lg:pt-48">
+      <section className="shell pb-24 pt-28 sm:pt-36 lg:pb-32 lg:pt-48">
         <WordReveal
           className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
           segments={[
@@ -34,29 +30,6 @@ export default function Home() {
           ]}
         />
       </section>
-
-      {/* Numbers */}
-      {stats.length > 0 && (
-        <section className="shell pb-28 lg:pb-40" aria-label="Impact on the record">
-          <div className="grid gap-4 md:grid-cols-3">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.08}>
-                <div className="flex h-full flex-col justify-between gap-10 rounded-[28px] bg-card p-7 sm:p-9">
-                  <CountUp value={Number(s.value)} className="display text-[clamp(7rem,14vw,12rem)] text-forest" />
-                  <div>
-                    <p className="text-lg font-medium leading-snug">
-                      {s.label}
-                      <VerifyBadge status={s.status} note={s.note} />
-                    </p>
-                    {s.context && <p className="mt-2 text-stone">{s.context}</p>}
-                    <SourceLink source={s.source} className="mt-4" />
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Story */}
       <section aria-labelledby="story-title" className="shell">

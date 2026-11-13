@@ -14,7 +14,7 @@ import { useEffect, useId, useRef, type PointerEvent } from "react";
 import type { ImageRef } from "@/content/types";
 import { Arrow, ArrowUpRight, Play } from "@/components/ui/icons";
 
-const NAME = "Shiroorkar";
+const NAME = "Udaykumar";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
