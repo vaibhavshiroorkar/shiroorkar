@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
-import { InquiryBand } from "@/components/InquiryBand";
-import { PageHero } from "@/components/PageHero";
-import { Photo } from "@/components/Photo";
-import { SourceNote, VerifyBadge } from "@/components/Verify";
-import { ArrowLink, SectionHeader } from "@/components/ui";
+import { Reveal } from "@/components/motion/Reveal";
+import { PageHeader } from "@/components/site/PageHeader";
+import { Photo } from "@/components/ui/Photo";
+import { Pill } from "@/components/ui/Pill";
+import { SourceLink, VerifyBadge } from "@/components/ui/Verify";
 import { focusAreas, initiatives } from "@/content/initiatives";
 import { instagram } from "@/content/site";
 import { publishable } from "@/lib/publish";
 
 export const metadata: Metadata = {
   title: "Environmental Work",
-  description:
-    "Environmental initiatives, awareness activities and community work by Udaykumar Shiroorkar.",
+  description: "Environmental initiatives, awareness activities and community work by Udaykumar Shiroorkar.",
   alternates: { canonical: "/work" },
 };
 
@@ -19,92 +18,57 @@ export default function WorkPage() {
   const items = publishable(initiatives);
   return (
     <>
-      <PageHero
-        eyebrow="Environmental work"
-        title={
-          <>
-            Protecting the places people <em className="text-forest">share.</em>
-          </>
-        }
-        intro="Green cover, clean public space and civic responsibility. Work on the ground, and the public conversation around it."
-      >
-        <ArrowLink href={instagram.url} external className="text-forest">
-          Follow the work as it happens on Instagram
-        </ArrowLink>
-      </PageHero>
+      <PageHeader title="The" accent="work" intro="Green cover, clean public space and civic responsibility. Work on the ground, and the public conversation around it." />
 
-      <section className="container-page py-20 lg:py-28">
-        <div className="grid gap-px bg-line sm:grid-cols-3">
-          {focusAreas.map((f, i) => (
-            <div key={f.title} className="reveal bg-paper p-8 lg:p-10">
-              <p className="font-display text-sm text-ochre">{String(i + 1).padStart(2, "0")}</p>
-              <h2 className="mt-6 text-2xl">{f.title}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{f.body}</p>
+      <section className="shell grid gap-4 py-20 md:grid-cols-3 lg:py-28">
+        {focusAreas.map((f, i) => (
+          <Reveal key={f.title} delay={i * 0.08}>
+            <div className="flex h-full flex-col justify-between gap-16 rounded-[28px] bg-card p-8">
+              <span className="display text-6xl text-ochre">{String(i + 1)}</span>
+              <div>
+                <h2 className="text-3xl font-semibold tracking-tight text-stage">{f.title}</h2>
+                <p className="mt-3 text-stone">{f.body}</p>
+              </div>
             </div>
-          ))}
-        </div>
+          </Reveal>
+        ))}
       </section>
 
-      <section className="container-page pb-24 lg:pb-32">
-        <SectionHeader
-          eyebrow="Initiatives"
-          title="Projects and campaigns."
-          intro="Each initiative is documented with what happened, where, and what came of it."
-        />
+      <section className="shell pb-28">
         {items.length === 0 ? (
-          <div className="mt-14 border border-line p-10 text-center">
-            <p className="font-display text-2xl">Project write-ups are being prepared.</p>
-            <p className="mx-auto mt-3 max-w-md text-muted">
-              Until then, the latest work is shared first on Instagram.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <ArrowLink href={instagram.url} external className="text-forest">
+          <div className="grain relative overflow-hidden rounded-[28px] bg-stage p-10 text-cream sm:p-14">
+            <p className="display relative z-10 text-[clamp(2.5rem,6vw,5rem)]">Write-ups are on the way</p>
+            <p className="relative z-10 mt-4 max-w-lg text-cream/75">Until then, the latest work is shared first on Instagram.</p>
+            <div className="relative z-10 mt-8">
+              <Pill href={instagram.url} target="_blank" rel="noopener noreferrer">
                 {instagram.handle}
-              </ArrowLink>
+              </Pill>
             </div>
           </div>
         ) : (
-          <div className="mt-14 flex flex-col">
-            {items.map((item, i) => (
-              <article
-                key={item.slug}
-                id={item.slug}
-                className="reveal grid scroll-mt-28 gap-8 border-t border-line py-12 lg:grid-cols-12 lg:gap-16"
-              >
-                <div className={`lg:col-span-6 ${i % 2 === 1 ? "lg:order-2 lg:col-start-7" : ""}`}>
-                  <Photo image={item.image} ratio="aspect-[3/2]" sizes="(min-width: 1024px) 45vw, 100vw" tone="paper" />
-                </div>
-                <div className={`flex flex-col justify-center lg:col-span-5 ${i % 2 === 1 ? "lg:order-1" : "lg:col-start-8"}`}>
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted">
-                    {item.category} &middot; {item.location} &middot; {item.period}
-                  </p>
-                  <h3 className="mt-4 text-3xl leading-tight sm:text-4xl">
-                    {item.title}
-                    <VerifyBadge status={item.status} note={item.note} />
-                  </h3>
-                  <p className="mt-5 leading-relaxed text-muted">{item.summary}</p>
-                  {item.outcome && (
-                    <p className="mt-6 border-l-2 border-ochre pl-4 text-sm leading-relaxed">{item.outcome}</p>
-                  )}
-                  <div className="mt-6 flex flex-wrap gap-6">
-                    {item.link && (
-                      <ArrowLink href={item.link.url} external className="text-forest">
-                        {item.link.label}
-                      </ArrowLink>
-                    )}
-                    <SourceNote source={item.source} />
+          <div className="space-y-6">
+            {items.map((item) => (
+              <Reveal key={item.slug}>
+                <article id={item.slug} className="grid scroll-mt-28 gap-6 rounded-[28px] bg-card p-4 md:grid-cols-2 md:p-6">
+                  <Photo image={item.image} className="aspect-[4/3] rounded-2xl" sizes="(min-width: 768px) 45vw, 100vw" />
+                  <div className="flex flex-col justify-center p-2 md:p-6">
+                    <p className="text-sm text-stone">
+                      {item.category} . {item.location} . {item.period}
+                    </p>
+                    <h2 className="mt-3 text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold leading-tight tracking-tight text-stage">
+                      {item.title}
+                      <VerifyBadge status={item.status} note={item.note} />
+                    </h2>
+                    <p className="mt-4 text-lg text-ink/80">{item.summary}</p>
+                    {item.outcome && <p className="mt-4 rounded-2xl bg-paper px-5 py-4">{item.outcome}</p>}
+                    <SourceLink source={item.source} className="mt-4" />
                   </div>
-                </div>
-              </article>
+                </article>
+              </Reveal>
             ))}
           </div>
         )}
       </section>
-
-      <InquiryBand
-        title="Working on an environmental project?"
-        body="Talk to us about collaborating on a project, an awareness campaign or a community programme."
-      />
     </>
   );
 }

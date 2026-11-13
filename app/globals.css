@@ -1,171 +1,134 @@
 @import "tailwindcss";
 
 @theme {
+  --color-stage: #0f2a21;
+  --color-stage-deep: #0a1f18;
   --color-forest: #173d32;
-  --color-forest-deep: #102c24;
-  --color-paper: #f6f5ef;
-  --color-paper-deep: #ecebe2;
-  --color-ink: #202522;
-  --color-muted: #59605b;
-  --color-sage: #9aaa91;
-  --color-sage-soft: #dfe4da;
+  --color-moss: #3f5a45;
+  --color-cream: #efe8d8;
+  --color-paper: #f4efe4;
+  --color-card: #fbf8f1;
+  --color-ink: #14201b;
+  --color-stone: #59655d;
   --color-ochre: #c69a5a;
-  --color-line: #d8d6ca;
+  --color-line: #ddd5c3;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
 
-  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
-
   body {
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    text-rendering: optimizeLegibility;
-  }
-
-  html:has(dialog[open]) {
-    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background: var(--color-forest);
-    color: var(--color-paper);
+    background: var(--color-ochre);
+    color: var(--color-stage);
   }
 
-  /* Ochre fails 3:1 against paper, so light surfaces use forest for the focus ring. */
   :focus-visible {
-    outline: 2px solid var(--color-forest);
+    outline: 2px solid var(--color-ochre);
     outline-offset: 3px;
-  }
-
-  .on-dark :focus-visible {
-    outline-color: var(--color-ochre);
   }
 
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
   p {
     text-wrap: pretty;
   }
+
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
 }
 
 @layer components {
-  .container-page {
+  .shell {
     margin-inline: auto;
     width: 100%;
-    max-width: 1320px;
+    max-width: 1440px;
     padding-inline: 1rem;
   }
 
   @media (min-width: 640px) {
-    .container-page {
+    .shell {
       padding-inline: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
-    .container-page {
+    .shell {
       padding-inline: 2.5rem;
     }
   }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
+  /* Archivo's width axis runs 62 to 125. Condensed black is the display voice. */
+  .display {
+    font-stretch: 62%;
+    font-weight: 900;
     text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.86;
   }
 
-  .eyebrow::before {
+  /* Film-like grain over the green stages. Decorative only. */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .grain::after {
     content: "";
-    width: 1.75rem;
-    height: 1px;
-    background: var(--color-ochre);
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Topographic contour lines for photo placeholders and dark bands. */
-  .contour {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='none' stroke='%23173d32' stroke-opacity='.16' stroke-width='.8'%3E%3Cpath d='M0 80c27-24 53-24 80 0s53 24 80 0M0 133c27-24 53-24 80 0s53 24 80 0M0 27c27-24 53-24 80 0s53 24 80 0'/%3E%3C/g%3E%3C/svg%3E");
+  .marquee-track {
+    animation: marquee 40s linear infinite;
   }
 
-  .contour-light {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='none' stroke='%23f6f5ef' stroke-opacity='.07' stroke-width='.8'%3E%3Cpath d='M0 80c27-24 53-24 80 0s53 24 80 0M0 133c27-24 53-24 80 0s53 24 80 0M0 27c27-24 53-24 80 0s53 24 80 0'/%3E%3C/g%3E%3C/svg%3E");
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
   }
 
-  /* Underline that grows from the left on hover. */
-  .link-grow {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0% 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 0.4s var(--ease-soft);
-  }
-
-  .link-grow:hover,
-  .link-grow:focus-visible {
-    background-size: 100% 1px;
-  }
-}
-
-/*
- * Scroll-linked reveal with no JavaScript. Browsers without view timelines, or
- * readers who prefer reduced motion, see the content immediately.
- */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: reveal-up linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 40%;
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
     }
   }
-
-  .hero-in {
-    animation: reveal-up 0.9s var(--ease-soft) both;
-  }
-
-  .hero-in-delay {
-    animation: reveal-up 0.9s 0.15s var(--ease-soft) both;
-  }
 }
 
-@keyframes reveal-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
+@keyframes marquee {
   to {
-    opacity: 1;
-    transform: none;
+    transform: translateX(-50%);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+/* Lenis smooth scroll: the few rules it needs, inlined. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
 
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-  }
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

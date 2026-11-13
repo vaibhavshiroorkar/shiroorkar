@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
-import { ArrowIcon, ButtonLink } from "@/components/ui";
+import { PageHeader } from "@/components/site/PageHeader";
+import { Pill } from "@/components/ui/Pill";
+import { ArrowUpRight } from "@/components/ui/icons";
 import { site, whatsappLink } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -16,48 +17,27 @@ export default function ContactPage() {
     ...(wa ? [{ label: "WhatsApp", value: "Message on WhatsApp", href: wa, external: true }] : []),
     ...site.socials.map((s) => ({ label: s.label, value: s.handle, href: s.url, external: true })),
   ];
-
   return (
     <>
-      <PageHero
-        eyebrow="Contact"
-        title={
-          <>
-            Get in <em className="text-forest">touch.</em>
-          </>
-        }
-        intro="For speaking, workshops, projects and partnerships, the inquiry form is the quickest route. For anything else, write directly."
-      >
-        <ButtonLink href="/work-with-us#inquiry" className="self-start">
-          Send an inquiry
-        </ButtonLink>
-      </PageHero>
-
-      <section className="container-page py-16 lg:py-24">
-        <ul className="border-t border-line">
-          {rows.map((r) => (
-            <li key={r.label} className="border-b border-line">
-              <a
-                href={r.href}
-                {...(r.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="group grid gap-2 py-8 sm:grid-cols-12 sm:items-center"
-              >
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted sm:col-span-3">
-                  {r.label}
-                </span>
-                <span className="break-all font-display text-2xl transition-colors group-hover:text-forest sm:col-span-8 sm:text-4xl">
-                  {r.value}
-                </span>
-                <ArrowIcon className="hidden size-6 justify-self-end text-forest transition-transform group-hover:translate-x-1 sm:col-span-1 sm:block" />
-                {r.external && <span className="sr-only">(opens in a new tab)</span>}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-10 max-w-2xl text-sm leading-relaxed text-muted">
-          This website is managed by the Shiroorkar family. Engagements arranged here are kept
-          separate from any non-profit or voluntary work, and no legal services are offered.
-        </p>
+      <PageHeader title="Say" accent="hello" intro="For speaking, workshops, projects and partnerships, the inquiry form is the quickest route.">
+        <Pill href="/work-with-us#inquiry">Send an inquiry</Pill>
+      </PageHeader>
+      <section className="shell space-y-3 py-20 lg:py-28">
+        {rows.map((r) => (
+          <a
+            key={r.label}
+            href={r.href}
+            {...(r.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            className="group flex flex-col gap-2 rounded-[24px] bg-card p-7 transition-colors hover:bg-stage hover:text-cream sm:flex-row sm:items-center sm:justify-between sm:p-9"
+          >
+            <span className="text-sm text-stone group-hover:text-cream/70">{r.label}</span>
+            <span className="flex items-center gap-3 break-all text-[clamp(1.5rem,4vw,3rem)] font-semibold tracking-tight">
+              {r.value}
+              <ArrowUpRight className="size-6 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+            </span>
+            {r.external && <span className="sr-only">(opens in a new tab)</span>}
+          </a>
+        ))}
       </section>
     </>
   );

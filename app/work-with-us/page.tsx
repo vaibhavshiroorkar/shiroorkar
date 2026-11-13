@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { InquiryForm, InquiryFormFromParams } from "@/components/InquiryForm";
-import { PageHero } from "@/components/PageHero";
-import { ArrowIcon, Eyebrow } from "@/components/ui";
+import { InquiryForm, InquiryFormFromParams } from "@/components/sections/InquiryForm";
+import { PageHeader } from "@/components/site/PageHeader";
+import { Arrow } from "@/components/ui/icons";
 import { inquiryTypes } from "@/content/inquiryTypes";
-import { site, whatsappLink } from "@/content/site";
+import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Work With Us",
@@ -15,36 +15,24 @@ export const metadata: Metadata = {
 };
 
 export default function WorkWithUsPage() {
-  const wa = whatsappLink(`Hello, I would like to discuss working with ${site.person}.`);
   return (
     <>
-      <PageHero
-        eyebrow="Work with us"
-        title={
-          <>
-            Let&apos;s do something <em className="text-forest">useful</em> together.
-          </>
-        }
-        intro="Choose what you have in mind, or simply write to us. Every inquiry is read and answered personally."
-      />
+      <PageHeader title="Work" accent="together" intro="Pick what you have in mind, or just write to us. Every inquiry is read and answered personally." />
 
-      <section className="container-page py-16 lg:py-24">
+      <section className="shell py-16 lg:py-24">
         <h2 className="sr-only">Ways to work together</h2>
-        <ul className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-5">
-          {inquiryTypes.map((t, i) => (
-            <li key={t.id} className="bg-paper">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {inquiryTypes.map((t) => (
+            <li key={t.id}>
               <Link
                 href={`/work-with-us?type=${t.id}#inquiry`}
                 scroll={false}
-                className="group flex h-full flex-col p-7 transition-colors hover:bg-forest hover:text-paper"
+                className="group flex h-full flex-col justify-between gap-10 rounded-[24px] bg-card p-6 transition-colors hover:bg-stage hover:text-cream"
               >
-                <span className="font-display text-sm text-ochre">{String(i + 1).padStart(2, "0")}</span>
-                <span className="mt-6 font-display text-2xl leading-snug">{t.title}</span>
-                <span className="mt-3 flex-1 text-sm leading-relaxed text-muted group-hover:text-paper/75">
+                <span className="text-xl font-semibold leading-snug tracking-tight">{t.title}</span>
+                <span className="flex items-end justify-between gap-4 text-sm text-stone group-hover:text-cream/70">
                   {t.description}
-                </span>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
-                  Start <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+                  <Arrow className="size-5 shrink-0 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>
             </li>
@@ -52,41 +40,22 @@ export default function WorkWithUsPage() {
         </ul>
       </section>
 
-      <section id="inquiry" className="scroll-mt-20 border-t border-line">
-        <div className="container-page grid gap-14 py-20 lg:grid-cols-12 lg:py-28">
-          <div className="lg:col-span-4">
-            <Eyebrow className="text-forest">Inquiry</Eyebrow>
-            <h2 className="mt-6 text-4xl leading-tight sm:text-5xl">Tell us about it.</h2>
-            <p className="mt-6 leading-relaxed text-muted">
-              A few lines are enough to start. Include the audience, a rough date and the city.
-            </p>
-            <div className="mt-10 space-y-6 border-t border-line pt-8 text-sm">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Email</p>
-                <a href={`mailto:${site.email}`} className="mt-2 block break-all text-lg text-forest hover:underline">
-                  {site.email}
-                </a>
-              </div>
-              {wa && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">WhatsApp</p>
-                  <a href={wa} target="_blank" rel="noopener noreferrer" className="mt-2 block text-lg text-forest hover:underline">
-                    Message us on WhatsApp
-                  </a>
-                </div>
-              )}
-              <p className="leading-relaxed text-muted">
-                Fees and formats are agreed per engagement. We do not take bookings or payments
-                online.
-              </p>
-            </div>
-          </div>
-          <div className="relative lg:col-span-7 lg:col-start-6">
-            <Suspense fallback={<InquiryForm />}>
-              <InquiryFormFromParams />
-            </Suspense>
-          </div>
+      <section id="inquiry" className="shell grid scroll-mt-24 gap-12 pb-28 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div>
+          <h2 className="display text-[clamp(3.5rem,8vw,7rem)] text-stage">
+            Tell us <span className="font-serif font-normal normal-case italic tracking-normal text-forest">about it</span>
+          </h2>
+          <p className="mt-6 max-w-sm text-lg text-stone">
+            A few lines are enough. Fees and formats are agreed per engagement; nothing is booked or
+            paid online.
+          </p>
+          <a href={`mailto:${site.email}`} className="mt-8 inline-block break-all text-lg font-semibold text-forest underline underline-offset-4">
+            {site.email}
+          </a>
         </div>
+        <Suspense fallback={<InquiryForm />}>
+          <InquiryFormFromParams />
+        </Suspense>
       </section>
     </>
   );

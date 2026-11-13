@@ -1,6 +1,60 @@
 import { sources } from "./sources";
 import type { ImageRef, Verifiable } from "./types";
 
+/**
+ * Transparent PNG cutouts for the homepage hero. Save the file in public/images/
+ * and set `src`. Until then the hero shows a neutral silhouette.
+ * Desktop: full or three-quarter body, at least 2000px tall.
+ * Mobile: waist-up crop of the same photo.
+ */
+export const heroCutout = {
+  desktop: {
+    src: null,
+    alt: "Udaykumar Shiroorkar",
+    brief: "Transparent PNG cutout, three-quarter body, at least 2000px tall",
+  },
+  mobile: {
+    src: null,
+    alt: "Udaykumar Shiroorkar",
+    brief: "Transparent PNG cutout, waist-up",
+  },
+} satisfies Record<string, ImageRef>;
+
+/** Short chapters for the homepage stacking cards. Each line is sourced. */
+export const chapters: ({ title: string; lines: string; image: ImageRef } & Verifiable)[] = [
+  {
+    title: "The ward",
+    lines:
+      "As Assistant Municipal Commissioner of the BMC's 'B' Ward, he took on unauthorised construction in Madanpura, Pydhonie, Abdul Rehman Street and Nagpada.",
+    image: { src: null, alt: "", brief: "Street or ward office photo, 4:3" },
+    status: "sourced",
+    source: sources.fpjProfile,
+  },
+  {
+    title: "The workers",
+    lines:
+      "He pushed sweepers and manhole cleaners, many earning under Rs 6,000 a month, to go back to their studies. Twenty-three passed their SSC exams.",
+    image: { src: null, alt: "", brief: "Photo with civic workers, 4:3" },
+    status: "sourced",
+    source: sources.fpjProfile,
+  },
+  {
+    title: "The film",
+    lines:
+      "Their story became the Marathi feature film Ata Thambaycha Naay!, released on 1 May 2025, with Ashutosh Gowariker in his role.",
+    image: { src: null, alt: "", brief: "Photo at the premiere or screening (own photo only), 4:3" },
+    status: "sourced",
+    source: sources.wikiFilm,
+  },
+  {
+    title: "The work today",
+    lines:
+      "Now his cause is the environment: protecting green cover and public space, and explaining civic issues in plain words on Instagram.",
+    image: { src: null, alt: "", brief: "Field photo of environmental work, 4:3" },
+    status: "confirmed",
+  },
+];
+
 export const portraits = {
   hero: {
     src: null,

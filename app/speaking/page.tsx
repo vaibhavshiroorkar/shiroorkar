@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { InquiryBand } from "@/components/InquiryBand";
-import { OfferingCard } from "@/components/OfferingCard";
-import { PageHero } from "@/components/PageHero";
-import { ButtonLink, SectionHeader } from "@/components/ui";
+import { Reveal } from "@/components/motion/Reveal";
+import { PageHeader } from "@/components/site/PageHeader";
+import { Pill } from "@/components/ui/Pill";
 import { offerings } from "@/content/offerings";
 
 export const metadata: Metadata = {
@@ -12,60 +11,51 @@ export const metadata: Metadata = {
   alternates: { canonical: "/speaking" },
 };
 
-const steps = [
-  { title: "Tell us the occasion", body: "Audience, date, place and what you hope people take away." },
-  { title: "We shape the session", body: "We suggest a format and adapt the content to your audience." },
-  { title: "He shows up prepared", body: "With local examples and time for questions from the room." },
-];
-
 export default function SpeakingPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Speaking and workshops"
-        title={
-          <>
-            Real public service, told to the people who can <em className="text-forest">use it.</em>
-          </>
-        }
-        intro="Keynotes, awareness sessions and workshops for companies, colleges, schools and communities."
-      >
-        <ButtonLink href="/work-with-us?type=speaking#inquiry" className="self-start">
-          Invite Udaykumar
-        </ButtonLink>
-      </PageHero>
+      <PageHeader title="On your" accent="stage" intro="Keynotes, awareness sessions and workshops built on real public service. Formats and fees are agreed per event.">
+        <Pill href="/work-with-us?type=speaking#inquiry">Invite Udaykumar</Pill>
+      </PageHeader>
 
-      <section className="container-page py-20 lg:py-28">
-        <SectionHeader
-          eyebrow="Topics"
-          title="Programmes."
-          intro="Each programme can run as a talk, a workshop or a longer engagement. Formats and fees are agreed per event."
-        />
-        <div className="mt-14">
-          {offerings.map((o, i) => (
-            <div key={o.id} id={o.id} className="scroll-mt-24">
-              <OfferingCard offering={o} index={i} />
-            </div>
-          ))}
-        </div>
+      <section className="shell space-y-6 py-20 lg:py-28">
+        {offerings.map((o, i) => (
+          <Reveal key={o.id}>
+            <article id={o.id} className="grid scroll-mt-28 gap-8 rounded-[28px] bg-card p-7 sm:p-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+              <div>
+                <p className="text-sm font-semibold text-forest">{o.format}</p>
+                <h2 className="display mt-4 text-[clamp(3rem,7vw,6rem)] text-stage">{o.name}</h2>
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/80">{o.summary}</p>
+              </div>
+              <div className="flex flex-col justify-between gap-8">
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <p className="text-sm font-semibold">Who it is for</p>
+                    <ul className="mt-3 space-y-2 text-stone">
+                      {o.audience.map((a) => (
+                        <li key={a}>{a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">What people leave with</p>
+                    <ul className="mt-3 space-y-2 text-stone">
+                      {o.takeaways.map((t) => (
+                        <li key={t}>{t}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <Pill href={`/work-with-us?type=${o.inquiryType}&topic=${o.id}#inquiry`} tone={i % 2 ? "stage" : "ochre"}>
+                    Ask about this
+                  </Pill>
+                </div>
+              </div>
+            </article>
+          </Reveal>
+        ))}
       </section>
-
-      <section className="border-t border-line bg-paper-deep/60 py-20 lg:py-28">
-        <div className="container-page">
-          <SectionHeader eyebrow="How it works" title="Three steps to a booking." />
-          <ol className="mt-14 grid gap-px bg-line sm:grid-cols-3">
-            {steps.map((s, i) => (
-              <li key={s.title} className="reveal bg-paper p-8 lg:p-10">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre">Step {i + 1}</p>
-                <h3 className="mt-4 text-2xl">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{s.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <InquiryBand title="Planning an event?" />
     </>
   );
 }

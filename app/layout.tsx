@@ -1,20 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { Archivo, Instrument_Serif } from "next/font/google";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { Footer } from "@/components/site/Footer";
+import { Header } from "@/components/site/Header";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  axes: ["opsz", "SOFT"],
+  axes: ["wdth"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -39,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#173d32",
+  themeColor: "#0f2a21",
 };
 
 const personJsonLd = {
@@ -48,24 +51,20 @@ const personJsonLd = {
   name: site.person,
   url: site.url,
   jobTitle: "Retired Assistant Municipal Commissioner",
-  worksFor: { "@type": "Organization", name: site.brand },
   sameAs: site.socials.map((s) => s.url),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      data-scroll-behavior="smooth"
-      className={`${fraunces.variable} ${inter.variable} antialiased`}
-    >
+    <html lang="en" className={`${archivo.variable} ${instrument.variable}`}>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ochre focus:px-5 focus:py-2 focus:text-stage"
         >
           Skip to content
         </a>
+        <SmoothScroll />
         <Header />
         <main id="main" className="flex-1">
           {children}

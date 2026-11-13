@@ -15,8 +15,8 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#173d32",
-          color: "#f6f5ef",
+          background: "#0f2a21",
+          color: "#efe8d8",
           padding: "72px 80px",
         }}
       >
@@ -26,7 +26,7 @@ export default function OpengraphImage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 84, lineHeight: 1.02 }}>Udaykumar Shiroorkar</div>
-          <div style={{ marginTop: 28, fontSize: 36, color: "#9aaa91" }}>
+          <div style={{ marginTop: 28, fontSize: 36, color: "#c69a5a" }}>
             Experience. Responsibility. Impact.
           </div>
         </div>
