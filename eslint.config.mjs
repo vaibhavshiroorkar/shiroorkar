@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Archived static builds of past versions; not source code.
+    "docs/**",
   ]),
 ]);
 

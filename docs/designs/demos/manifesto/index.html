@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo D: Bold Manifesto | Shiroorkar</title>
+<meta name="description" content="Design demo D for the Udaykumar Shiroorkar website: bold manifesto direction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f3ee; --ink: #111412; --muted: #4f5551; --accent: #173d32; --line: #111412;
+    --display: "Inter Tight", system-ui, sans-serif; --body: "Newsreader", Georgia, serif;
+    --gutter: 16px; --max: 1440px;
+  }
+  @media (min-width: 640px) { :root { --gutter: 24px; } }
+  @media (min-width: 1024px) { :root { --gutter: 48px; } }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 19px/1.55 var(--body); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; letter-spacing: -0.045em; line-height: .9; text-wrap: balance; }
+  p { margin: 0; text-wrap: pretty; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+  .inverse :focus-visible { outline-color: var(--paper); }
+  .wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+  .tag { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  .accent { color: var(--accent); }
+
+  .top { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 2px solid var(--line); }
+  .top .wrap { display: flex; justify-content: space-between; align-items: center; min-height: 60px; gap: 16px; }
+  .wm { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
+  .top nav { display: none; gap: 28px; font-family: var(--display); font-weight: 500; font-size: 15px; }
+  .top nav a { text-decoration: none; }
+  .top nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+  @media (min-width: 900px) { .top nav { display: flex; } }
+  .pill { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 20px; border-radius: 999px; background: var(--ink); color: var(--paper); font-family: var(--display); font-weight: 700; font-size: 14px; text-decoration: none; transition: background .25s; }
+  .pill:hover { background: var(--accent); }
+
+  .screen { min-height: 92svh; display: grid; align-content: center; padding-block: 96px; border-bottom: 2px solid var(--line); }
+  .mega { font-size: clamp(3.4rem, 12.5vw, 12rem); }
+  .big { font-size: clamp(2.8rem, 9vw, 8.5rem); }
+  .lede { margin-top: 40px; max-width: 34rem; font-size: clamp(19px, 2vw, 23px); color: var(--muted); }
+  .row { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .pill.lg { min-height: 56px; padding: 0 28px; font-size: 16px; }
+  .pill.out { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  .pill.out:hover { background: var(--ink); color: var(--paper); }
+
+  .hero h1 span { display: block; }
+  .hero .who { margin-top: 48px; display: grid; gap: 24px; border-top: 2px solid var(--line); padding-top: 24px; }
+  .hero .who p { font-size: 17px; color: var(--muted); max-width: 30rem; }
+  .hero .ph { aspect-ratio: 1/1; max-width: 220px; background: #e4e3dc; position: relative; }
+  .hero .ph span { position: absolute; inset: auto 8px 8px; font: 11px/1.3 var(--display); }
+  @media (min-width: 900px) { .hero .who { grid-template-columns: 220px 1fr auto; align-items: end; } }
+
+  .num-screen { display: grid; gap: 32px; }
+  .giant { font-family: var(--display); font-weight: 800; font-size: clamp(9rem, 42vw, 30rem); line-height: .78; letter-spacing: -0.07em; color: var(--accent); }
+  .num-screen h2 { font-size: clamp(2.2rem, 5.6vw, 5rem); }
+  .num-screen .lede { margin-top: 24px; }
+  .src { margin-top: 24px; font-size: 15px; color: var(--muted); }
+  .src a { text-underline-offset: 3px; }
+  @media (min-width: 1024px) { .num-screen { grid-template-columns: 1.1fr 1fr; align-items: end; } }
+
+  .inverse { background: var(--ink); color: var(--paper); border-bottom: 0; }
+  .inverse .lede, .inverse .src { color: rgba(244,243,238,.72); }
+  .inverse .accent { color: #9fc3b3; }
+
+  .facts { display: grid; border-top: 2px solid var(--line); margin-top: 48px; }
+  .facts div { padding: 24px 0; border-bottom: 2px solid var(--line); }
+  .facts h3 { font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -0.03em; line-height: 1; }
+  .facts p { margin-top: 10px; font-size: 17px; color: var(--muted); }
+  @media (min-width: 900px) { .facts { grid-template-columns: repeat(3, 1fr); } .facts div { padding: 28px 24px 32px 0; } .facts div + div { border-left: 2px solid var(--line); padding-left: 24px; } }
+
+  .reels { margin-top: 48px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .reels a { text-decoration: none; }
+  .reels .cell { aspect-ratio: 9/16; background: var(--ink); color: var(--paper); display: grid; place-items: center; font: 800 40px/1 var(--display); transition: background .25s; border-radius: 4px; }
+  .reels a:hover .cell { background: var(--accent); }
+  .reels p { margin-top: 10px; font: 600 14px/1.3 var(--display); }
+  @media (min-width: 900px) { .reels { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+
+  .list { list-style: none; margin: 48px 0 0; padding: 0; border-top: 2px solid var(--line); }
+  .list a { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 20px 0; border-bottom: 2px solid var(--line); text-decoration: none; }
+  .list strong { font-family: var(--display); font-weight: 800; letter-spacing: -0.035em; font-size: clamp(1.9rem, 5.4vw, 4.4rem); line-height: 1; transition: color .2s; }
+  .list span { font: 600 13px/1.3 var(--display); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); text-align: right; flex: none; max-width: 40%; }
+  .list a:hover strong { color: var(--accent); }
+
+  .cta { min-height: 80svh; }
+  .cta .mail { display: inline-block; margin-top: 40px; font-family: var(--display); font-weight: 800; font-size: clamp(1.4rem, 5vw, 3.6rem); letter-spacing: -0.03em; text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 10px; word-break: break-all; }
+  .cta .mail:hover { color: var(--accent); }
+  footer { padding: 24px 0 96px; font-size: 15px; color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1 span { animation: slide .9s cubic-bezier(.2,.8,.2,1) both; }
+    .hero h1 span:nth-child(2) { animation-delay: .08s; } .hero h1 span:nth-child(3) { animation-delay: .16s; }
+    @supports (animation-timeline: view()) {
+      .giant { animation: grow linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+      .list li { animation: slide linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    }
+  }
+  @keyframes slide { from { opacity: 0; transform: translateY(.3em); } to { opacity: 1; transform: none; } }
+  @keyframes grow { from { opacity: .1; transform: scale(.85); transform-origin: left bottom; } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  .demo-tag { position: fixed; left: 12px; bottom: 12px; z-index: 30; background: var(--accent); color: var(--paper); font: 600 12px/1 var(--display); padding: 10px 14px; border-radius: 999px; text-decoration: none; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#top">SHIROORKAR</a>
+    <nav aria-label="Main"><a href="#story">Story</a><a href="#work">Work</a><a href="#talks">Talks</a><a href="#book">Contact</a></nav>
+    <a class="pill" href="#book">Book a talk</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="screen hero wrap" aria-labelledby="h">
+    <p class="tag">Udaykumar Shiroorkar</p>
+    <h1 id="h" class="mega" style="margin-top:24px"><span>Experience.</span><span>Responsibility.</span><span class="accent">Impact.</span></h1>
+    <div class="who">
+      <div class="ph" role="img" aria-label="Portrait placeholder"><span>PHOTO: tight portrait, 1:1</span></div>
+      <p>Retired Assistant Municipal Commissioner of the BMC. Advocate. Environmental worker. The officer behind the film <i>Ata Thambaycha Naay!</i></p>
+      <div class="row" style="margin-top:0"><a class="pill lg" href="#book">Invite him</a><a class="pill lg out" href="#story">His story</a></div>
+    </div>
+  </section>
+
+  <section id="story" class="screen wrap">
+    <div class="num-screen">
+      <p class="giant" aria-hidden="true">23</p>
+      <div>
+        <h2>Twenty-three civic workers went back to school. And passed.</h2>
+        <p class="lede">Sweepers and manhole cleaners in the BMC's 'B' Ward, many earning under Rs 6,000 a month. He pushed them to sit their SSC exams. Then 26 more joined night classes.</p>
+        <p class="src">Source: <a href="https://www.freepressjournal.in/mumbai/bmc-film-ata-thambaycha-naay-celebrates-uday-shirurkars-vision-to-empower-civic-workers-through-education">Free Press Journal, April 2025</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen inverse">
+    <div class="wrap">
+      <p class="tag">The film</p>
+      <h2 class="big" style="margin-top:24px">It became a movie. <span class="accent">Ata Thambaycha Naay!</span></h2>
+      <p class="lede">Marathi feature film, released 1 May 2025. Ashutosh Gowariker plays him. Best Film, Filmfare Awards Marathi.</p>
+      <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Ata_Thambaycha_Naay!">Wikipedia</a></p>
+    </div>
+  </section>
+
+  <section id="work" class="screen wrap">
+    <p class="tag">Now</p>
+    <h2 class="big" style="margin-top:24px">The environment is the <span class="accent">next ward.</span></h2>
+    <div class="facts">
+      <div><h3>Protect</h3><p>Green cover and clean public space.</p></div>
+      <div><h3>Explain</h3><p>Environmental and civic issues, in plain words.</p></div>
+      <div><h3>Mobilise</h3><p>Citizens and institutions acting together.</p></div>
+    </div>
+    <div class="reels">
+      <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell" aria-hidden="true">&#9654;</div><p>Reel title</p></a>
+      <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell" aria-hidden="true">&#9654;</div><p>Reel title</p></a>
+      <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell" aria-hidden="true">&#9654;</div><p>Reel title</p></a>
+      <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell" aria-hidden="true">&#9654;</div><p>Reel title</p></a>
+    </div>
+  </section>
+
+  <section id="talks" class="screen wrap">
+    <p class="tag">Talks and workshops</p>
+    <h2 class="big" style="margin-top:24px">Put him on your stage.</h2>
+    <ul class="list">
+      <li><a href="#book"><strong>Now We Won't Stop</strong><span>Keynote</span></a></li>
+      <li><a href="#book"><strong>The City and Its Environment</strong><span>Awareness session</span></a></li>
+      <li><a href="#book"><strong>Environment in Practice</strong><span>Student workshop</span></a></li>
+      <li><a href="#book"><strong>Ward-Level Action</strong><span>Community programme</span></a></li>
+      <li><a href="#book"><strong>Collaborations</strong><span>Partnerships</span></a></li>
+    </ul>
+  </section>
+
+  <section id="book" class="screen cta wrap">
+    <p class="tag">Contact</p>
+    <h2 class="mega" style="margin-top:24px">Let's <span class="accent">talk.</span></h2>
+    <a class="mail" href="mailto:shiroorkarur@gmail.com">shiroorkarur@gmail.com</a>
+    <div class="row"><a class="pill lg out" href="https://www.instagram.com/udaykumarshiroorkar/">Instagram</a><a class="pill lg out" href="https://www.linkedin.com/in/dr-udaykumar-ir-shiroorkar-9353472a/">LinkedIn</a></div>
+  </section>
+</main>
+<footer class="wrap">No legal services are offered through this website. Engagements are kept separate from any non-profit or voluntary work.</footer>
+<a class="demo-tag" href="../index.html">Demo D . Bold Manifesto . All demos</a>
+</body>
+</html>

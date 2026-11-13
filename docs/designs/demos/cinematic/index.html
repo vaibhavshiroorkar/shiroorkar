@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo C: Cinematic Story | Shiroorkar</title>
+<meta name="description" content="Design demo C for the Udaykumar Shiroorkar website: cinematic scroll storytelling direction.">
+<meta name="theme-color" content="#121512">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #121512; --night-2: #1a1e1b; --paper: #ecebe4; --dim: rgba(236,235,228,.72); --faint: rgba(236,235,228,.14);
+    --ochre: #c69a5a; --sage: #9aaa91; --forest: #173d32;
+    --serif: "Cormorant Garamond", Georgia, serif; --sans: "Inter", system-ui, sans-serif;
+    --gutter: 16px; --max: 1280px; --ease: cubic-bezier(.16,.8,.2,1);
+  }
+  @media (min-width: 640px) { :root { --gutter: 24px; } }
+  @media (min-width: 1024px) { :root { --gutter: 48px; } }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--night); color: var(--paper); font: 16px/1.7 var(--sans); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  p { margin: 0; text-wrap: pretty; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--ochre); outline-offset: 4px; }
+  .wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+  .kicker { font-size: 11px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--ochre); }
+
+  .grain { position: fixed; inset: 0; pointer-events: none; z-index: 40; opacity: .07; mix-blend-mode: overlay;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  .top { position: fixed; inset: 0 0 auto; z-index: 20; background: rgba(18,21,18,.94); border-bottom: 1px solid var(--faint); }
+  .top .wrap { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+  .wordmark { font-family: var(--serif); font-size: 20px; letter-spacing: .4em; text-transform: uppercase; text-decoration: none; }
+  .ghost { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px; border: 1px solid rgba(236,235,228,.35); font-size: 13px; letter-spacing: .08em; text-decoration: none; transition: background .4s, color .4s; }
+  .ghost:hover { background: var(--paper); color: var(--night); }
+
+  .open { min-height: 100svh; display: grid; align-content: end; padding-bottom: 12vh; padding-top: 120px; position: relative; overflow: hidden; }
+  .open .frame { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, #2a312c 0%, var(--night) 65%); }
+  .open .frame span { position: absolute; right: var(--gutter); top: 96px; font-size: 11px; color: var(--dim); border: 1px solid var(--faint); padding: 6px 10px; }
+  .open h1 { position: relative; font-size: clamp(3.4rem, 11vw, 10rem); line-height: .92; font-style: italic; }
+  .open h1 span { display: block; font-style: normal; }
+  .open .sub { position: relative; margin-top: 32px; display: grid; gap: 24px; max-width: 64rem; }
+  .open .sub p { color: var(--dim); max-width: 32rem; font-size: 17px; }
+  .credits { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); }
+  .credits b { color: var(--paper); font-weight: 500; }
+  @media (min-width: 1024px) { .open .sub { grid-template-columns: 1fr 1fr; align-items: end; } }
+  .scroll-cue { position: relative; margin-top: 48px; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); text-decoration: none; display: inline-flex; gap: 12px; align-items: center; }
+  .scroll-cue::after { content: ""; width: 48px; height: 1px; background: var(--ochre); }
+
+  .chapter { min-height: 100svh; padding: 120px 0; display: grid; align-content: center; border-top: 1px solid var(--faint); }
+  .chapter .grid { display: grid; gap: 40px; }
+  .chapter .mark { font-family: var(--serif); }
+  .chapter .mark .no { display: block; font-size: clamp(4rem, 10vw, 8rem); line-height: .8; color: var(--ochre); font-style: italic; }
+  .chapter .mark .t { display: block; margin-top: 16px; font-size: 11px; font-family: var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--dim); }
+  .chapter h2 { font-size: clamp(2.4rem, 6vw, 5rem); line-height: 1.02; }
+  .chapter .text { margin-top: 28px; display: grid; gap: 18px; max-width: 36rem; color: var(--dim); font-size: 17px; }
+  .chapter .text strong { color: var(--paper); font-weight: 500; }
+  @media (min-width: 1024px) {
+    .chapter .grid { grid-template-columns: 3fr 9fr; gap: 64px; align-items: start; }
+    .chapter .mark { position: sticky; top: 120px; }
+  }
+  .still { margin: 40px 0 0; position: relative; aspect-ratio: 2.39/1; background: var(--night-2); border-block: 10px solid #000; overflow: hidden; }
+  .still::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, #2b332d, transparent 70%); }
+  .still figcaption { position: absolute; left: 12px; bottom: 10px; font-size: 11px; color: var(--dim); }
+  .src { margin-top: 18px; font-size: 12px; color: rgba(236,235,228,.6); }
+  .src a { text-underline-offset: 3px; }
+
+  .tally { margin-top: 48px; display: grid; gap: 1px; background: var(--faint); }
+  .tally div { background: var(--night); padding: 28px 0; }
+  .tally .n { font-family: var(--serif); font-size: clamp(5rem, 14vw, 10rem); line-height: .85; color: var(--paper); }
+  .tally p { margin-top: 12px; color: var(--dim); max-width: 22rem; }
+  @media (min-width: 768px) { .tally { grid-template-columns: repeat(3, 1fr); } .tally div { padding: 32px 28px; } .tally div:first-child { padding-left: 0; } }
+
+  .interlude { min-height: 80svh; display: grid; place-items: center; text-align: center; padding: 120px var(--gutter); background: #0c0e0c; }
+  .interlude blockquote { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 5.4vw, 4.4rem); line-height: 1.12; max-width: 56rem; }
+  .interlude cite { display: block; margin-top: 32px; font-style: normal; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); }
+
+  .strip { position: relative; margin-top: 40px; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 14px var(--gutter); margin-inline: calc(var(--gutter) * -1); background: #000;
+    --hole: radial-gradient(circle, var(--night) 3px, transparent 3.5px); }
+  .strip::before, .strip::after { content: ""; position: absolute; left: 0; right: 0; height: 10px; background: var(--hole) 0 50%/18px 10px repeat-x; }
+  .strip::before { top: 2px; } .strip::after { bottom: 2px; }
+  .strip a { position: relative; flex: 0 0 62%; max-width: 240px; scroll-snap-align: start; text-decoration: none; }
+  .strip .cell { aspect-ratio: 9/16; background: var(--night-2); display: grid; place-items: center; transition: filter .5s; filter: grayscale(1) brightness(.85); }
+  .strip a:hover .cell, .strip a:focus-visible .cell { filter: none; }
+  .strip .cell span { width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(236,235,228,.6); display: grid; place-items: center; }
+  .strip p { padding: 10px 2px 2px; font-size: 13px; }
+  @media (min-width: 768px) { .strip a { flex-basis: 23%; } }
+
+  .reel-list { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1px solid var(--faint); }
+  .reel-list a { display: grid; gap: 4px; padding: 22px 0; border-bottom: 1px solid var(--faint); text-decoration: none; }
+  .reel-list strong { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 3.6vw, 2.4rem); line-height: 1.1; transition: color .3s, transform .5s var(--ease); }
+  .reel-list span { color: var(--dim); font-size: 14px; }
+  .reel-list a:hover strong { color: var(--ochre); transform: translateX(8px); }
+  @media (min-width: 768px) { .reel-list a { grid-template-columns: 2fr 1fr; align-items: baseline; } }
+
+  .end { text-align: center; padding: 140px var(--gutter) 120px; border-top: 1px solid var(--faint); }
+  .end h2 { font-size: clamp(2.6rem, 7vw, 5.6rem); line-height: 1; font-style: italic; }
+  .end p { margin: 24px auto 0; max-width: 32rem; color: var(--dim); }
+  .end .cta { margin-top: 40px; display: inline-flex; align-items: center; min-height: 52px; padding: 0 32px; background: var(--paper); color: var(--night); text-decoration: none; font-size: 14px; letter-spacing: .08em; font-weight: 600; }
+  .end .cta:hover { background: var(--ochre); }
+  .roll { margin-top: 80px; display: grid; gap: 10px; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); }
+  .roll b { color: var(--paper); font-weight: 500; }
+  .roll a { text-underline-offset: 4px; }
+  footer { text-align: center; font-size: 12px; color: rgba(236,235,228,.55); padding: 0 var(--gutter) 96px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .open h1 span { animation: rise 1.4s var(--ease) both; }
+    .open h1 span:nth-child(2) { animation-delay: .2s; }
+    .open .sub { animation: fadein 1.6s .6s both; }
+    @supports (animation-timeline: view()) {
+      .fade { animation: rise linear both; animation-timeline: view(); animation-range: entry 5% cover 35%; }
+      .still::before { animation: drift linear both; animation-timeline: view(); }
+    }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(40px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes drift { from { transform: scale(1.15) translateX(-4%); } to { transform: scale(1) translateX(0); } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  .demo-tag { position: fixed; left: 12px; bottom: 12px; z-index: 50; background: var(--paper); color: var(--night); font-size: 12px; padding: 8px 12px; text-decoration: none; }
+  .demo-tag b { color: #7a5a27; }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Shiroorkar</a>
+    <a class="ghost" href="#end">Work with us</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="open wrap" aria-labelledby="t">
+    <div class="frame" aria-hidden="true"><span>STILL: wide portrait in the ward, 16:9 full bleed</span></div>
+    <p class="kicker" style="position:relative">A true story . Mumbai</p>
+    <h1 id="t" style="margin-top:24px"><span>Now, we</span><span>won't stop.</span></h1>
+    <div class="sub">
+      <p>Udaykumar Shiroorkar spent his career in Mumbai's civic administration. One quiet decision of his became a feature film. Today he works for the environment and for the people who keep a city running.</p>
+      <p class="credits"><span><b>Udaykumar Shiroorkar</b></span><span>Public service</span><span>Advocacy</span><span>Environment</span></p>
+    </div>
+    <a class="scroll-cue" href="#c1">Begin</a>
+  </section>
+
+  <section id="c1" class="chapter">
+    <div class="wrap grid">
+      <p class="mark"><span class="no">I</span><span class="t">The ward</span></p>
+      <div class="fade">
+        <h2>Some of the densest streets in Mumbai.</h2>
+        <div class="text">
+          <p>As Assistant Municipal Commissioner of the BMC's <strong>'B' Ward</strong>, he took on unauthorised construction in Madanpura, Pydhonie, Abdul Rehman Street and Nagpada, and gave public space back to the public.</p>
+        </div>
+        <figure class="still"><figcaption>STILL: street scene in 'B' Ward, 2.39:1</figcaption></figure>
+        <p class="src">Source: <a href="https://www.freepressjournal.in/mumbai/bmc-film-ata-thambaycha-naay-celebrates-uday-shirurkars-vision-to-empower-civic-workers-through-education">Free Press Journal, April 2025</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="c2" class="chapter">
+    <div class="wrap grid">
+      <p class="mark"><span class="no">II</span><span class="t">The workers</span></p>
+      <div class="fade">
+        <h2>He asked the people who clean the city to go back to school.</h2>
+        <div class="text">
+          <p>Sweepers, manhole cleaners, road and pipeline repairmen. Many earned under <strong>Rs 6,000 a month</strong> and had left school early. He encouraged them to study again.</p>
+        </div>
+        <div class="tally">
+          <div><p class="n">23</p><p>passed their SSC exams, years after leaving school.</p></div>
+          <div><p class="n">26</p><p>more joined night classes once they saw it could be done.</p></div>
+          <div><p class="n">1</p><p>feature film followed.</p></div>
+        </div>
+        <p class="src">Source: <a href="https://www.freepressjournal.in/mumbai/bmc-film-ata-thambaycha-naay-celebrates-uday-shirurkars-vision-to-empower-civic-workers-through-education">Free Press Journal, April 2025</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="interlude" aria-label="Quote">
+    <blockquote class="fade">"The recognition they received from society had a ripple effect."<cite>Udaykumar Shiroorkar</cite></blockquote>
+  </section>
+
+  <section id="c3" class="chapter">
+    <div class="wrap grid">
+      <p class="mark"><span class="no">III</span><span class="t">The film</span></p>
+      <div class="fade">
+        <h2><i>Ata Thambaycha Naay!</i></h2>
+        <div class="text">
+          <p>The Marathi feature film based on his story opened in theatres on <strong>1 May 2025</strong>. Shivraj Waichal directed it. Ashutosh Gowariker plays Udaykumar. It won Best Film at the Filmfare Awards Marathi.</p>
+          <p>No poster or film still is shown here without the producers' permission.</p>
+        </div>
+        <p class="src">Source: <a href="https://en.wikipedia.org/wiki/Ata_Thambaycha_Naay!">Wikipedia: Ata Thambaycha Naay!</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="c4" class="chapter">
+    <div class="wrap grid">
+      <p class="mark"><span class="no">IV</span><span class="t">The work today</span></p>
+      <div class="fade">
+        <h2>Now the cause is the environment.</h2>
+        <div class="text">
+          <p>Protecting green cover and public space, and explaining environmental and civic issues in short, plain-spoken Reels.</p>
+        </div>
+        <div class="strip">
+          <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell"><span aria-hidden="true">&#9654;</span></div><p>Reel title (cover 9:16)</p></a>
+          <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell"><span aria-hidden="true">&#9654;</span></div><p>Reel title (cover 9:16)</p></a>
+          <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell"><span aria-hidden="true">&#9654;</span></div><p>Reel title (cover 9:16)</p></a>
+          <a href="https://www.instagram.com/udaykumarshiroorkar/" target="_blank" rel="noopener"><div class="cell"><span aria-hidden="true">&#9654;</span></div><p>Reel title (cover 9:16)</p></a>
+        </div>
+        <p class="src">Opens Instagram. Nothing plays automatically on this site.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="c5" class="chapter">
+    <div class="wrap grid">
+      <p class="mark"><span class="no">V</span><span class="t">Your stage</span></p>
+      <div class="fade">
+        <h2>Bring the story to your audience.</h2>
+        <ul class="reel-list">
+          <li><a href="#end"><strong>Now We Won't Stop</strong><span>Keynote or leadership talk</span></a></li>
+          <li><a href="#end"><strong>The City and Its Environment</strong><span>Environmental awareness session</span></a></li>
+          <li><a href="#end"><strong>Environment in Practice</strong><span>Educational workshop</span></a></li>
+          <li><a href="#end"><strong>Ward-Level Action</strong><span>Community awareness programme</span></a></li>
+          <li><a href="#end"><strong>Institutional Collaborations</strong><span>Partnerships and projects</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="end" class="end">
+    <p class="kicker">The next chapter</p>
+    <h2 style="margin-top:20px">Write it with us.</h2>
+    <p>Invite Udaykumar to speak, run a workshop or collaborate on an environmental project. Every inquiry gets a personal reply.</p>
+    <a class="cta" href="mailto:shiroorkarur@gmail.com">Start an inquiry</a>
+    <div class="roll">
+      <p><b>Email</b> . <a href="mailto:shiroorkarur@gmail.com">shiroorkarur@gmail.com</a></p>
+      <p><b>Instagram</b> . <a href="https://www.instagram.com/udaykumarshiroorkar/">@udaykumarshiroorkar</a></p>
+      <p><b>LinkedIn</b> . <a href="https://www.linkedin.com/in/dr-udaykumar-ir-shiroorkar-9353472a/">Udaykumar Shiroorkar</a></p>
+    </div>
+  </section>
+</main>
+<footer>No legal services are offered through this website. Engagements are kept separate from any non-profit or voluntary work.</footer>
+<a class="demo-tag" href="../index.html"><b>Demo C</b> Cinematic Story . All demos</a>
+</body>
+</html>

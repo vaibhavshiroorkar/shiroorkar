@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site Versions | Shiroorkar</title>
+<meta name="description" content="Every version of the Udaykumar Shiroorkar website, preserved as static HTML.">
+<style>
+  :root { --paper: #f4efe4; --ink: #14201b; --stone: #59655d; --stage: #0f2a21; --ochre: #c69a5a; --card: #fbf8f1; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 system-ui, sans-serif; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--ochre); outline-offset: 3px; }
+  .wrap { max-width: 1100px; margin-inline: auto; padding: 56px 16px 96px; }
+  h1 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1; letter-spacing: -0.03em; margin: 0; }
+  .intro { margin-top: 16px; max-width: 40rem; color: var(--stone); }
+  ol { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 12px; }
+  li a { display: grid; gap: 6px; padding: 24px; border-radius: 20px; background: var(--card); text-decoration: none; transition: background .2s, color .2s; }
+  li a:hover { background: var(--stage); color: var(--paper); }
+  .v { font-size: 13px; font-weight: 600; color: var(--ochre); }
+  .t { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .d { color: var(--stone); }
+  li a:hover .d { color: rgba(244,239,228,.75); }
+  .note { margin-top: 32px; font-size: 14px; color: var(--stone); }
+  code { background: var(--card); padding: 2px 6px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Every version of the site</h1>
+  <p class="intro">Static copies of each version, oldest first, so none is ever lost. The full history, with what changed and why, is in docs/versions.md.</p>
+  <ol>
+    <li><a href="v1/"><span class="v">v1 . commit 6d87a84</span><span class="t">Editorial</span><span class="d">Paper and forest green, Fraunces serif, numbered sections, impact figures.</span></a></li>
+    <li><a href="demos/index.html"><span class="v">Demos A to D . never committed</span><span class="t">Four design directions</span><span class="d">Editorial Magazine, Civic Record, Cinematic Story, Bold Manifesto.</span></a></li>
+    <li><a href="v2/"><span class="v">v2 . commit bbd2d87</span><span class="t">Green cutout hero</span><span class="d">Giant name behind the cutout, motion, story told through the film.</span></a></li>
+    <li><a href="v3/"><span class="v">v3 . branch v3-work-led</span><span class="t">Work-led homepage</span><span class="d">Same design as v2, rebalanced around all his work, with press research.</span></a></li>
+  </ol>
+  <p class="note">The site snapshots need a local server: run <code>npx serve docs</code> and open <code>/designs/</code>. The demos also open directly from the file.</p>
+</main>
+</body>
+</html>

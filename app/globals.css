@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Archived builds of past versions live in docs/; keep their classes out of this site's CSS. */
+@source not "../docs";
+
 @theme {
   --color-stage: #0f2a21;
   --color-stage-deep: #0a1f18;

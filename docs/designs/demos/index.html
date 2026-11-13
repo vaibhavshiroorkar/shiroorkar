@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Demos | Shiroorkar</title>
+<meta name="description" content="Four design directions explored for the Udaykumar Shiroorkar website.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f6f5ef; --ink: #202522; --muted: #59605b; --line: #d8d6ca; --forest: #173d32; --gutter: 16px; }
+  @media (min-width: 640px) { :root { --gutter: 24px; } }
+  @media (min-width: 1024px) { :root { --gutter: 40px; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 "Inter", system-ui, sans-serif; }
+  h1, h2 { font-family: "Fraunces", Georgia, serif; font-weight: 400; letter-spacing: -0.02em; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--forest); outline-offset: 3px; }
+  .wrap { max-width: 1320px; margin-inline: auto; padding-inline: var(--gutter); }
+  header { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+  header h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.02; margin-top: 16px; }
+  header p { margin-top: 16px; max-width: 44rem; color: var(--muted); }
+  .back { font-size: 14px; color: var(--forest); }
+  .grid { display: grid; gap: 48px; padding: 48px 0 96px; }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; gap: 56px 40px; } }
+  article { display: flex; flex-direction: column; }
+  .preview { position: relative; aspect-ratio: 16/10; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+  .preview iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+  .meta { margin-top: 20px; display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+  .meta h2 { font-size: 30px; }
+  .meta span { font-size: 13px; color: var(--muted); }
+  .mood { margin-top: 10px; color: var(--muted); }
+  .chips { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; }
+  .chip { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
+  .fonts { margin-left: 8px; color: var(--muted); }
+  .open { margin-top: 24px; align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: var(--forest); color: var(--paper); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .open:hover { background: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html">All versions</a>
+    <h1>Design demos A to D</h1>
+    <p>Four directions explored between v1 and v2, all using the same content. They were set aside in favour of the green cutout hero (v2), and are kept here for reference.</p>
+  </div>
+</header>
+
+<main class="wrap grid">
+  <article>
+    <div class="preview" aria-hidden="true"><iframe src="editorial/index.html" title="" tabindex="-1" loading="lazy" scrolling="no"></iframe></div>
+    <div class="meta"><h2>A. Editorial Magazine</h2><span>v1, refined</span></div>
+    <p class="mood">Asymmetric grid, drop cap, pull quotes, one lead story with smaller cards.</p>
+    <div class="chips"><span class="chip" style="background:#173d32"></span><span class="chip" style="background:#f6f5ef"></span><span class="chip" style="background:#c69a5a"></span><span class="fonts">Fraunces + Inter</span></div>
+    <a class="open" href="editorial/index.html">Open demo A</a>
+  </article>
+  <article>
+    <div class="preview" aria-hidden="true"><iframe src="civic/index.html" title="" tabindex="-1" loading="lazy" scrolling="no"></iframe></div>
+    <div class="meta"><h2>B. Civic Record</h2><span>Trust first</span></div>
+    <p class="mood">Swiss grid, numbered sections, a sticky contents list, facts in ruled tables with footnoted sources.</p>
+    <div class="chips"><span class="chip" style="background:#fbfaf6"></span><span class="chip" style="background:#161a18"></span><span class="chip" style="background:#173d32"></span><span class="fonts">EB Garamond + Lato</span></div>
+    <a class="open" href="civic/index.html">Open demo B</a>
+  </article>
+  <article>
+    <div class="preview" aria-hidden="true"><iframe src="cinematic/index.html" title="" tabindex="-1" loading="lazy" scrolling="no"></iframe></div>
+    <div class="meta"><h2>C. Cinematic Story</h2><span>Story first</span></div>
+    <p class="mood">Five dark chapters like the film, letterboxed stills, film grain, a filmstrip of Reels.</p>
+    <div class="chips"><span class="chip" style="background:#121512"></span><span class="chip" style="background:#ecebe4"></span><span class="chip" style="background:#c69a5a"></span><span class="fonts">Cormorant Garamond + Inter</span></div>
+    <a class="open" href="cinematic/index.html">Open demo C</a>
+  </article>
+  <article>
+    <div class="preview" aria-hidden="true"><iframe src="manifesto/index.html" title="" tabindex="-1" loading="lazy" scrolling="no"></iframe></div>
+    <div class="meta"><h2>D. Bold Manifesto</h2><span>Booking first</span></div>
+    <p class="mood">Oversized type, one statement per screen, a giant 23, a single forest accent.</p>
+    <div class="chips"><span class="chip" style="background:#f4f3ee"></span><span class="chip" style="background:#111412"></span><span class="chip" style="background:#173d32"></span><span class="fonts">Inter Tight + Newsreader</span></div>
+    <a class="open" href="manifesto/index.html">Open demo D</a>
+  </article>
+</main>
+<script>
+  const fit = () => document.querySelectorAll(".preview").forEach((p) => {
+    p.querySelector("iframe").style.transform = `scale(${p.clientWidth / 1440})`;
+  });
+  addEventListener("resize", fit);
+  fit();
+</script>
+</body>
+</html>
