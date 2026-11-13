@@ -20,37 +20,55 @@ export const heroCutout = {
   },
 } satisfies Record<string, ImageRef>;
 
-/** Short chapters for the homepage stacking cards. Each line is sourced. */
-export const chapters: ({ title: string; lines: string; image: ImageRef } & Verifiable)[] = [
+export type WorkArea = { area: string; title: string; lines: string; image: ImageRef } & Verifiable;
+
+/**
+ * The homepage "His work" cards: one per area of work, not one per chapter of
+ * the film's story. Add new areas here as they are documented.
+ */
+export const workAreas: WorkArea[] = [
   {
-    title: "The ward",
+    area: "Environment, today",
+    title: "Green Mumbai",
     lines:
-      "As Assistant Municipal Commissioner of the BMC's 'B' Ward, he took on unauthorised construction in Madanpura, Pydhonie, Abdul Rehman Street and Nagpada.",
+      "Protecting green cover and public space, and explaining environmental and civic issues in plain words to a growing audience on Instagram.",
+    image: { src: null, alt: "", brief: "Field photo of environmental work, 4:3" },
+    status: "confirmed",
+    note: "Add named projects, places and dates as they are confirmed.",
+  },
+  {
+    area: "Public service",
+    title: "Public space",
+    lines:
+      "As Assistant Municipal Commissioner of the BMC's 'B' Ward, he led drives against unauthorised construction in Madanpura, Pydhonie, Abdul Rehman Street and Nagpada, and gave streets back to the public.",
     image: { src: null, alt: "", brief: "Street or ward office photo, 4:3" },
     status: "sourced",
     source: sources.fpjProfile,
   },
   {
-    title: "The workers",
+    area: "Civic awareness",
+    title: "Clean city",
     lines:
-      "He pushed sweepers and manhole cleaners, many earning under Rs 6,000 a month, to go back to their studies. Twenty-three passed their SSC exams.",
-    image: { src: null, alt: "", brief: "Photo with civic workers, 4:3" },
+      "In 2017 he planned a Swachh Mumbai caller tune for the ward helpline, with videos for residents on waste segregation and the work of street-cleaning staff.",
+    image: { src: null, alt: "", brief: "Cleanliness drive or ward event photo, 4:3" },
     status: "sourced",
-    source: sources.fpjProfile,
+    source: sources.dna2017,
   },
   {
-    title: "The film",
+    area: "Education",
+    title: "Second chances",
     lines:
-      "Their story became the Marathi feature film Ata Thambaycha Naay!, released on 1 May 2025, with Ashutosh Gowariker in his role.",
-    image: { src: null, alt: "", brief: "Photo at the premiere or screening (own photo only), 4:3" },
+      "He kept a municipal night school in Dongri open by persuading the ward's civic workers to enrol. Twenty-three passed their SSC exams, a story later told in a feature film.",
+    image: { src: null, alt: "", brief: "Photo with the civic workers or at the night school, 4:3" },
     status: "sourced",
-    source: sources.wikiFilm,
+    source: sources.yourStory2017,
   },
   {
-    title: "The work today",
+    area: "Law",
+    title: "Advocate",
     lines:
-      "Now his cause is the environment: protecting green cover and public space, and explaining civic issues in plain words on Instagram.",
-    image: { src: null, alt: "", brief: "Field photo of environmental work, 4:3" },
+      "He brings a lawyer's discipline to public questions: evidence first, then a clear argument. Shown as background only; no legal services are offered.",
+    image: { src: null, alt: "", brief: "Portrait at a desk or with books, 4:3" },
     status: "confirmed",
   },
 ];
@@ -117,21 +135,23 @@ export const story: ({ heading: string; paragraphs: string[] } & Verifiable)[] =
   {
     heading: "A career in the city's engine room",
     paragraphs: [
-      "Mumbai's municipal corporation runs the services most people never think about until they fail: drains, roads, waste, water. Udaykumar spent his working life there and rose to Assistant Municipal Commissioner.",
+      "Mumbai's municipal corporation runs the services most people never think about until they fail: drains, roads, waste, water. Udaykumar came to Mumbai from Belgaum for work, spent his working life there and rose to Assistant Municipal Commissioner. Colleagues and the press came to call him the BMC's \"Singham\".",
       "In 'B' Ward he led demolition drives against unauthorised construction to give public space back to the public. It was unpopular work in places that had grown used to the opposite.",
     ],
     status: "sourced",
     source: sources.fpjProfile,
+    also: [sources.prahaar2025],
   },
   {
     heading: "The workers who went back to school",
     paragraphs: [
       "The ward's Class IV staff included sweepers, manhole cleaners and road and pipeline repairmen. Many earned less than Rs 6,000 a month and had left school early.",
-      "He encouraged them to study again. Twenty-three passed their SSC exams. The recognition that followed persuaded 26 more to join night classes, many of whom had refused before out of shame.",
+      "When he learnt that the Dongri Municipal Night School was about to close for lack of students, he urged them to enrol, and filled in their forms himself. In June 2017, 21 men and 2 women aged 30 to 50 passed their SSC exams. The recognition that followed persuaded 26 more to join night classes, many of whom had refused before out of shame.",
       "\"The recognition they received from society had a ripple effect,\" he later said.",
     ],
     status: "sourced",
     source: sources.fpjProfile,
+    also: [sources.yourStory2017],
   },
   {
     heading: "From the ward to the screen",

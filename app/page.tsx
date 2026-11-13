@@ -1,5 +1,4 @@
 import { CutoutHero } from "@/components/hero/CutoutHero";
-import { CountUp } from "@/components/motion/CountUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { Marquee } from "@/components/sections/Marquee";
@@ -7,9 +6,7 @@ import { ProgrammeList } from "@/components/sections/ProgrammeList";
 import { ReelsRail } from "@/components/sections/ReelsRail";
 import { StackCards } from "@/components/sections/StackCards";
 import { Pill } from "@/components/ui/Pill";
-import { SourceLink, VerifyBadge } from "@/components/ui/Verify";
-import { chapters, heroCutout } from "@/content/bio";
-import { impact } from "@/content/impact";
+import { heroCutout, workAreas } from "@/content/bio";
 import { media } from "@/content/media";
 import { offerings } from "@/content/offerings";
 import { instagram, site } from "@/content/site";
@@ -17,7 +14,6 @@ import { publishable } from "@/lib/publish";
 
 export default function Home() {
   const reels = publishable(media).filter((m) => m.kind === "reel");
-  const stats = publishable(impact);
   const latest = reels[0] ? { title: reels[0].title, url: reels[0].url } : { title: instagram.handle, url: instagram.url };
 
   return (
@@ -25,45 +21,27 @@ export default function Home() {
       <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} latest={latest} />
 
       {/* Statement */}
-      <section className="shell pb-16 pt-28 sm:pt-36 lg:pt-48">
+      <section className="shell pb-24 pt-28 sm:pt-36 lg:pb-32 lg:pt-48">
         <WordReveal
           className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
           segments={[
-            { text: "He asked the people who clean Mumbai to go back to school." },
-            { text: "Twenty-three of them passed.", accent: true },
+            { text: "He spent his career making Mumbai work for the people in it." },
+            { text: "Now he does it for the environment.", accent: true },
           ]}
         />
       </section>
 
-      {/* Numbers */}
-      {stats.length > 0 && (
-        <section className="shell pb-28 lg:pb-40" aria-label="Impact on the record">
-          <div className="grid gap-4 md:grid-cols-3">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.08}>
-                <div className="flex h-full flex-col justify-between gap-10 rounded-[28px] bg-card p-7 sm:p-9">
-                  <CountUp value={Number(s.value)} className="display text-[clamp(7rem,14vw,12rem)] text-forest" />
-                  <div>
-                    <p className="text-lg font-medium leading-snug">
-                      {s.label}
-                      <VerifyBadge status={s.status} note={s.note} />
-                    </p>
-                    {s.context && <p className="mt-2 text-stone">{s.context}</p>}
-                    <SourceLink source={s.source} className="mt-4" />
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Story */}
-      <section aria-labelledby="story-title" className="shell">
-        <h2 id="story-title" className="display mb-10 text-[clamp(3.5rem,10vw,9rem)] text-stage">
-          His <span className="font-serif font-normal normal-case italic tracking-normal text-forest">story</span>
-        </h2>
-        <StackCards chapters={publishable(chapters)} />
+      {/* Work */}
+      <section aria-labelledby="work-title" className="shell">
+        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <h2 id="work-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
+            His <span className="font-serif font-normal normal-case italic tracking-normal text-forest">work</span>
+          </h2>
+          <Pill href="/work" tone="outline-ink" className="self-start md:self-auto">
+            All his work
+          </Pill>
+        </div>
+        <StackCards items={publishable(workAreas)} />
       </section>
 
       {/* Reels */}
@@ -83,7 +61,7 @@ export default function Home() {
         </section>
       )}
 
-      <Marquee items={["Free Press Journal", "Ata Thambaycha Naay!", "Best Film, Filmfare Awards Marathi", "Instagram @udaykumarshiroorkar"]} />
+      <Marquee items={["Free Press Journal", "YourStory", "DNA India", "Prahaar", "Mumbai Live", "Ata Thambaycha Naay!"]} />
 
       {/* Speaking */}
       <section aria-labelledby="speak-title" className="shell py-28 lg:py-40">

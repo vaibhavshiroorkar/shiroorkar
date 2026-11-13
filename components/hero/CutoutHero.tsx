@@ -182,8 +182,8 @@ export function CutoutHero({
           transition={{ duration: 0.9, delay: 0.9, ease: EASE }}
           className="max-w-md text-lg leading-snug text-cream/85 sm:text-xl"
         >
-          Retired BMC Assistant Municipal Commissioner. The true story behind{" "}
-          <em className="font-serif text-[1.15em] text-ochre">Ata Thambaycha Naay!</em>
+          Former BMC Assistant Commissioner, advocate and environmental worker. Known across Mumbai
+          as the BMC&apos;s <em className="font-serif text-[1.15em] text-ochre">Singham</em>.
         </motion.p>
 
         <motion.div

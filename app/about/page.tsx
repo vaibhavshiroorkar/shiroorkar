@@ -48,7 +48,11 @@ export default function AboutPage() {
                     {p}
                   </p>
                 ))}
-                <SourceLink source={c.source} className="mt-5" />
+                <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+                  {[c.source, ...(c.also ?? [])].map((s) => (
+                    <SourceLink key={s?.url} source={s} />
+                  ))}
+                </div>
               </article>
             </Reveal>
           ))}

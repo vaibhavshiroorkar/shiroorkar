@@ -13,6 +13,8 @@ export type Source = { label: string; url: string };
 export type Verifiable = {
   status: Status;
   source?: Source;
+  /** Extra sources when one block draws on several reports. */
+  also?: Source[];
   /** Internal note for whoever edits content. Never rendered in production. */
   note?: string;
 };
