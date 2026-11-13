@@ -58,6 +58,7 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
     return (
       <div className="relative h-[90svh] overflow-hidden">
         {image && <Photo image={image} className="absolute inset-0 h-full" sizes="100vw" />}
+        <div className="absolute inset-0 bg-stage-deep/35" />
         <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-stage-deep/60 to-transparent" />
         <Overlay story={story} cards={cards} />
       </div>
@@ -71,6 +72,7 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
           <motion.div style={{ scale: imageScale }} className="absolute inset-0">
             {image && <Photo image={image} className="h-full" sizes="100vw" />}
           </motion.div>
+          <div className="absolute inset-0 bg-stage-deep/35" />
           <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-stage-deep/60 to-transparent" />
         </motion.div>
         <motion.div style={{ opacity: textOpacity }} className="absolute inset-0">
