@@ -7,6 +7,7 @@ import { ProgrammeList } from "@/components/sections/ProgrammeList";
 import { ReelsRail } from "@/components/sections/ReelsRail";
 import { StackCards } from "@/components/sections/StackCards";
 import { Pill } from "@/components/ui/Pill";
+import { SourceLink } from "@/components/ui/Verify";
 import { heroCutout, stories } from "@/content/bio";
 import { interviews } from "@/content/interviews";
 import { media } from "@/content/media";
@@ -35,6 +36,7 @@ export default function Home() {
                 className="max-w-6xl text-[clamp(2rem,5.4vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-stage"
                 segments={story.statement}
               />
+              <SourceLink source={story.source} className="mt-6" />
             </div>
             <StackCards items={cards} skinOffset={i} />
           </section>

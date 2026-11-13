@@ -22,6 +22,11 @@ export const site = {
       handle: "Udaykumar Shiroorkar",
       url: "https://www.linkedin.com/in/dr-udaykumar-ir-shiroorkar-9353472a/",
     },
+    {
+      label: "X",
+      handle: "@shiroorkarur",
+      url: "https://x.com/shiroorkarur",
+    },
   ],
   nav: [
     { href: "/about", label: "About" },

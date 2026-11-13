@@ -25,6 +25,14 @@ export const sources = {
     label: "DNA India, August 2017",
     url: "https://www.dnaindia.com/mumbai/report-soon-b-ward-s-caller-tune-to-spread-cleanliness-word-2541344",
   },
+  dna2018: {
+    label: "DNA India, May 2018",
+    url: "https://www.dnaindia.com/delhi/report-illegal-constructions-sprout-in-mumbai-despite-bmc-demolitions-2610545",
+  },
+  facebookPage: {
+    label: "His Facebook page",
+    url: "https://www.facebook.com/udaykumar.shiroorkar/",
+  },
   prahaar2025: {
     label: "Prahaar, May 2025 (Marathi)",
     url: "https://prahaar.in/2025/05/01/udaykumar-shiroorkar-said-there-are-problems-find-solutions/",

@@ -93,6 +93,17 @@ export const media: MediaItem[] = [
     thumb: { src: null, alt: "", brief: "Optional: press photo with permission" },
     status: "sourced",
   },
+  {
+    id: "dna-2018",
+    kind: "press",
+    title: "Illegal constructions sprout in Mumbai despite BMC demolitions",
+    outlet: "DNA India",
+    date: "May 2018",
+    excerpt: "As ward officer for B and C Wards, he explains why illegal buildings keep rising and plans demolitions on Ismail Curtay Street.",
+    url: sources.dna2018.url,
+    thumb: { src: null, alt: "", brief: "Optional: press photo with permission" },
+    status: "sourced",
+  },
   ...interviews.map(
     (v): MediaItem => ({
       id: `video-${v.youtubeId}`,

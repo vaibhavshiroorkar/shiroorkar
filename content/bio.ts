@@ -1,5 +1,5 @@
 import { sources } from "./sources";
-import type { ImageRef, Verifiable } from "./types";
+import type { ImageRef, Source, Verifiable } from "./types";
 
 /**
  * Transparent PNG cutouts for the homepage hero. Save the file in public/images/
@@ -27,6 +27,8 @@ export type Story = {
   id: string;
   title: string;
   statement: { text: string; accent?: boolean }[];
+  /** Cited under the sentence when the sentence itself states a fact. */
+  source?: Source;
   cards: StoryCard[];
 };
 
@@ -104,6 +106,14 @@ export const stories: Story[] = [
         source: sources.fpjProfile,
       },
       {
+        title: "Two wards",
+        lines:
+          "In 2018 he ran B Ward and C Ward at the same time, and moved to demolish illegal buildings on Ismail Curtay Street.",
+        image: photo("Ward office or Ismail Curtay Street, 4:3"),
+        status: "sourced",
+        source: sources.dna2018,
+      },
+      {
         title: "Singham",
         lines: "That firmness earned him a name across Mumbai: the BMC's \"Singham\".",
         image: photo("Portrait from his BMC years, 4:3"),
@@ -147,11 +157,12 @@ export const stories: Story[] = [
   },
   {
     id: "environment",
-    title: "Environment today",
+    title: "Nisarg Rakshak",
     statement: [
-      { text: "Now his ward is the whole city," },
-      { text: "and his cause is the environment.", accent: true },
+      { text: "Today he goes by Nisarg Rakshak," },
+      { text: "the protector of nature.", accent: true },
     ],
+    source: sources.facebookPage,
     cards: [
       {
         title: "Green cover",

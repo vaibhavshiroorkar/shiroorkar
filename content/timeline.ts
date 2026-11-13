@@ -45,6 +45,14 @@ export const timeline: TimelineEntry[] = [
     source: sources.fpjProfile,
   },
   {
+    period: "May 2018",
+    periodStatus: "sourced",
+    title: "B Ward and C Ward together",
+    body: "Holds additional charge of C Ward alongside B Ward, and targets illegal high-rises in Dongri, Masjid and Pydhonie.",
+    status: "sourced",
+    source: sources.dna2018,
+  },
+  {
     period: "1 May 2025",
     periodStatus: "sourced",
     title: "Ata Thambaycha Naay! released",
