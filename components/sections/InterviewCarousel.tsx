@@ -1,55 +1,68 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
 import { youtubeThumb, youtubeUrl, type Interview } from "@/content/interviews";
 import { Arrow, ArrowUpRight, Play } from "@/components/ui/icons";
 
+/*
+ * Direction comes in through `custom`, so a video that is leaving uses the latest
+ * arrow pressed rather than the direction from its own last render.
+ */
+const slide = (reduce: boolean | null) => ({
+  enter: (dir: number) => (reduce ? { opacity: 0 } : { opacity: 0, x: `${dir * 6}%` }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => (reduce ? { opacity: 0 } : { opacity: 0, x: `${dir * -6}%` }),
+});
+
 /**
- * Swipeable row of interviews. Each card shows the thumbnail until tapped, then
- * swaps in YouTube's privacy-enhanced player, so nothing loads or plays on its own.
+ * One interview at a time, with an arrow on each side. The thumbnail shows until
+ * the visitor taps play; only then does YouTube's privacy-enhanced player load.
  */
 export function InterviewCarousel({ items }: { items: Interview[] }) {
-  const trackRef = useRef<HTMLUListElement>(null);
-  const [playing, setPlaying] = useState<string | null>(null);
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const [playing, setPlaying] = useState(false);
+  const reduce = useReducedMotion();
+  const v = items[index];
+  const many = items.length > 1;
 
-  const scrollByCard = (dir: 1 | -1) => {
-    const track = trackRef.current;
-    const card = track?.querySelector("li");
-    if (!track || !card) return;
-    track.scrollBy({ left: dir * (card.clientWidth + 16), behavior: "smooth" });
+  const go = (dir: 1 | -1) => {
+    setDirection(dir);
+    setPlaying(false);
+    setIndex((i) => (i + dir + items.length) % items.length);
   };
 
-  return (
-    <div>
-      <div className="flex justify-end gap-2">
-        <button
-          type="button"
-          onClick={() => scrollByCard(-1)}
-          className="flex size-12 items-center justify-center rounded-full border border-ink/20 transition-colors hover:bg-stage hover:text-cream"
-        >
-          <span className="sr-only">Previous interview</span>
-          <Arrow className="size-5 rotate-180" />
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollByCard(1)}
-          className="flex size-12 items-center justify-center rounded-full border border-ink/20 transition-colors hover:bg-stage hover:text-cream"
-        >
-          <span className="sr-only">Next interview</span>
-          <Arrow className="size-5" />
-        </button>
-      </div>
+  const arrow = (dir: 1 | -1) => (
+    <button
+      type="button"
+      onClick={() => go(dir)}
+      className="z-10 flex size-12 shrink-0 items-center justify-center rounded-full bg-cream/90 text-stage shadow-lg backdrop-blur transition-colors hover:bg-ochre md:size-14 md:bg-stage md:text-cream md:shadow-none md:hover:bg-forest"
+    >
+      <span className="sr-only">{dir === 1 ? "Next interview" : "Previous interview"}</span>
+      <Arrow className={`size-5 ${dir === -1 ? "rotate-180" : ""}`} />
+    </button>
+  );
 
-      <ul
-        ref={trackRef}
-        aria-label="Interviews"
-        className="relative -mx-4 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-4 [scrollbar-width:none] sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:-mx-10 lg:scroll-px-10 lg:px-10 [&::-webkit-scrollbar]:hidden"
-      >
-        {items.map((v) => (
-          <li key={v.youtubeId} className="w-[86vw] shrink-0 snap-start sm:w-[70vw] lg:w-[46vw] xl:w-[40vw]">
-            <div className="relative aspect-video overflow-hidden rounded-[22px] bg-stage">
-              {playing === v.youtubeId ? (
+  return (
+    <div role="group" aria-roledescription="carousel" aria-label="Interviews">
+      <div className="relative flex items-center gap-4 md:gap-6">
+        {many && <div className="absolute left-3 top-1/2 -translate-y-1/2 md:static md:translate-y-0">{arrow(-1)}</div>}
+
+        <div className="relative aspect-video flex-1 overflow-hidden rounded-[22px] bg-stage">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.div
+              key={v.youtubeId}
+              custom={direction}
+              variants={slide(reduce)}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0"
+            >
+              {playing ? (
                 <iframe
                   src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}?autoplay=1&rel=0`}
                   title={v.title}
@@ -58,39 +71,51 @@ export function InterviewCarousel({ items }: { items: Interview[] }) {
                   className="absolute inset-0 size-full"
                 />
               ) : (
-                <button type="button" onClick={() => setPlaying(v.youtubeId)} className="group absolute inset-0">
+                <button type="button" onClick={() => setPlaying(true)} className="group absolute inset-0">
                   <Image
                     src={youtubeThumb(v.youtubeId)}
                     alt=""
                     fill
-                    sizes="(min-width: 1024px) 46vw, 86vw"
+                    sizes="(min-width: 1024px) 70vw, 100vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
-                  <span className="absolute inset-0 bg-gradient-to-t from-stage/70 via-transparent to-transparent" />
-                  <span className="absolute left-5 top-5 flex size-14 items-center justify-center rounded-full bg-cream text-stage transition-transform group-hover:scale-110">
-                    <Play className="ml-0.5 size-4" />
+                  <span className="absolute inset-0 bg-stage/25 transition-colors group-hover:bg-stage/10" />
+                  <span className="absolute left-1/2 top-1/2 flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cream text-stage transition-transform group-hover:scale-110">
+                    <Play className="ml-1 size-6" />
                   </span>
                   <span className="sr-only">Play: {v.title}</span>
                 </button>
               )}
-            </div>
-            <p className="mt-4 text-sm text-stone">
-              {v.channel}
-              {v.detail ? ` . ${v.detail}` : ""}
-            </p>
-            <h3 className="mt-1 text-xl font-semibold leading-snug tracking-tight">{v.title}</h3>
-            <a
-              href={youtubeUrl(v.youtubeId)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1 text-sm text-forest underline-offset-4 hover:underline"
-            >
-              Watch on YouTube <ArrowUpRight className="size-3.5" />
-              <span className="sr-only">(opens in a new tab)</span>
-            </a>
-          </li>
-        ))}
-      </ul>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {many && <div className="absolute right-3 top-1/2 -translate-y-1/2 md:static md:translate-y-0">{arrow(1)}</div>}
+      </div>
+
+      <div className="mx-auto mt-6 flex max-w-4xl flex-col gap-4 md:flex-row md:items-start md:justify-between md:px-20">
+        <div aria-live="polite">
+          <p className="text-sm text-stone">
+            {v.channel}
+            {v.detail ? ` . ${v.detail}` : ""}
+          </p>
+          <h3 className="mt-1 text-xl font-semibold leading-snug tracking-tight sm:text-2xl">{v.title}</h3>
+          <a
+            href={youtubeUrl(v.youtubeId)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1 text-sm text-forest underline-offset-4 hover:underline"
+          >
+            Watch on YouTube <ArrowUpRight className="size-3.5" />
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+        </div>
+        {many && (
+          <p className="shrink-0 font-semibold tabular-nums text-stone">
+            {index + 1} / {items.length}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

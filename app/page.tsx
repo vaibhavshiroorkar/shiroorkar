@@ -22,6 +22,18 @@ export default function Home() {
     <>
       <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} />
 
+      {/* Interviews */}
+      {interviews.length > 0 && (
+        <section aria-labelledby="interviews-title" className="shell pt-28 lg:pt-40">
+          <h2 id="interviews-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
+            In <span className="font-serif font-normal normal-case italic tracking-normal text-forest">conversation</span>
+          </h2>
+          <div className="mt-6">
+            <InterviewCarousel items={interviews} />
+          </div>
+        </section>
+      )}
+
       {/* Stories: a sentence that lights up on scroll, then its stacking cards. */}
       {stories.map((story, i) => {
         const cards = publishable(story.cards);
@@ -42,18 +54,6 @@ export default function Home() {
           </section>
         );
       })}
-
-      {/* Interviews */}
-      {interviews.length > 0 && (
-        <section aria-labelledby="interviews-title" className="shell pt-28 lg:pt-40">
-          <h2 id="interviews-title" className="display text-[clamp(3.5rem,10vw,9rem)] text-stage">
-            In <span className="font-serif font-normal normal-case italic tracking-normal text-forest">conversation</span>
-          </h2>
-          <div className="mt-6">
-            <InterviewCarousel items={interviews} />
-          </div>
-        </section>
-      )}
 
       {/* Reels */}
       {reels.length > 0 ? (
