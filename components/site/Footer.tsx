@@ -1,10 +1,14 @@
 import { site } from "@/content/site";
 
-/* One row: the two-line description on the left, social links on the right. */
+/*
+ * One row: the two-line description on the left, social links on the right.
+ * When the page ends on a full-bleed photo (marked data-blend-footer), the footer
+ * drops its top padding so it reads as the caption under that photo.
+ */
 export function Footer() {
   return (
     <footer className="bg-stage-deep text-sm text-cream/60">
-      <div className="shell flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
+      <div className="shell flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between [body:has([data-blend-footer])_&]:pt-2">
         <p className="font-semibold leading-snug text-cream/85">
           <span className="md:whitespace-nowrap">The work and public voice of {site.person}.</span>{" "}
           <br className="hidden md:block" />

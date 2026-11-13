@@ -56,22 +56,22 @@ export function RevealStory({ story, cards }: { story: Story; cards: StoryCard[]
 
   if (reduce) {
     return (
-      <div className="relative h-[90svh] overflow-hidden">
+      <div data-blend-footer className="relative h-[90svh] overflow-hidden">
         {image && <Photo image={image} className="absolute inset-0 h-full" sizes="100vw" />}
-        <div className="absolute inset-0 bg-gradient-to-t from-stage via-stage/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-stage-deep via-stage-deep/40 to-transparent" />
         <Overlay story={story} cards={cards} />
       </div>
     );
   }
 
   return (
-    <div ref={ref} className="relative h-[230vh]">
+    <div ref={ref} data-blend-footer className="relative h-[230vh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div style={{ clipPath }} className="absolute inset-0">
           <motion.div style={{ scale: imageScale }} className="absolute inset-0">
             {image && <Photo image={image} className="h-full" sizes="100vw" />}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-stage via-stage/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stage-deep via-stage-deep/40 to-transparent" />
         </motion.div>
         <motion.div style={{ opacity: textOpacity }} className="absolute inset-0">
           <Overlay story={story} cards={cards} />
