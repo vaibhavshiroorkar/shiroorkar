@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { InquiryForm, InquiryFormFromParams } from "@/components/sections/InquiryForm";
 import { ArrowUpRight } from "@/components/ui/icons";
-import { instagram, site } from "@/content/site";
+import { site, whatsappLink } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Invite",
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function WorkWithUsPage() {
+  const wa = whatsappLink();
   return (
     <section className="grain relative min-h-svh overflow-hidden bg-stage text-cream">
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(55%_60%_at_15%_10%,rgba(198,154,90,0.16),transparent_70%)]" />
@@ -29,12 +30,23 @@ export default function WorkWithUsPage() {
                 {site.email}
               </a>
             </li>
-            <li>
-              <a href={instagram.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 underline-offset-4 hover:underline">
-                {instagram.handle} <ArrowUpRight className="size-4" />
-                <span className="sr-only">(opens in a new tab)</span>
-              </a>
-            </li>
+            {wa && (
+              <li>
+                <a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 underline-offset-4 hover:underline">
+                  WhatsApp <ArrowUpRight className="size-4" />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            )}
+            {site.socials.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 underline-offset-4 hover:underline">
+                  <span className="w-24 text-sm text-cream/50">{s.label}</span>
+                  {s.handle} <ArrowUpRight className="size-4" />
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 

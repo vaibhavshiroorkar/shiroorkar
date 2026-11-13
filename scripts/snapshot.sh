@@ -37,6 +37,8 @@ const config: NextConfig = {
   ...base,
   cacheComponents: false,
   partialPrefetching: false,
+  redirects: undefined, // a static export cannot serve redirects
+
   output: "export",
   basePath: "/designs/$name",
   trailingSlash: true,

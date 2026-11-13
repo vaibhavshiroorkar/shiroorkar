@@ -38,7 +38,6 @@ export const site = {
     { href: "/work", label: "Work" },
     { href: "/media", label: "Media" },
     { href: "/speaking", label: "Speaking" },
-    { href: "/contact", label: "Contact" },
   ],
 } as const;
 
