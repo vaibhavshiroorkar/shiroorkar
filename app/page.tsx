@@ -14,11 +14,10 @@ import { publishable } from "@/lib/publish";
 
 export default function Home() {
   const reels = publishable(media).filter((m) => m.kind === "reel");
-  const latest = reels[0] ? { title: reels[0].title, url: reels[0].url } : { title: instagram.handle, url: instagram.url };
 
   return (
     <>
-      <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} latest={latest} />
+      <CutoutHero desktop={heroCutout.desktop} mobile={heroCutout.mobile} />
 
       {/* Stories: a sentence that lights up on scroll, then its stacking cards. */}
       {stories.map((story, i) => {

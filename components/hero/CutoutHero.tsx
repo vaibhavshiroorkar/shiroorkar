@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import {
   motion,
   useMotionValue,
@@ -12,7 +11,6 @@ import {
 } from "motion/react";
 import { useEffect, useId, useRef, type PointerEvent } from "react";
 import type { ImageRef } from "@/content/types";
-import { Arrow, ArrowUpRight, Play } from "@/components/ui/icons";
 
 const NAME = "Udaykumar";
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -64,11 +62,9 @@ function Silhouette() {
 export function CutoutHero({
   desktop,
   mobile,
-  latest,
 }: {
   desktop: ImageRef;
   mobile: ImageRef;
-  latest: { title: string; url: string };
 }) {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -185,38 +181,6 @@ export function CutoutHero({
           Retired BMC Assistant Municipal Commissioner. The true story behind{" "}
           <em className="font-serif text-[1.15em] text-ochre">Ata Thambaycha Naay!</em>
         </motion.p>
-
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.05, ease: EASE }}
-          className="flex items-end gap-3"
-        >
-          <a
-            href={latest.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group hidden items-center gap-3 rounded-2xl bg-cream/10 p-2 pr-4 backdrop-blur-md transition-colors hover:bg-cream/15 lg:flex"
-          >
-            <span className="flex h-14 w-10 items-center justify-center rounded-lg bg-moss">
-              <Play className="size-3.5" />
-            </span>
-            <span className="text-left">
-              <span className="block text-[11px] text-cream/60">Latest on Instagram</span>
-              <span className="flex items-center gap-1 text-sm font-medium">
-                {latest.title} <ArrowUpRight className="size-3.5" />
-              </span>
-            </span>
-            <span className="sr-only">(opens in a new tab)</span>
-          </a>
-          <Link
-            href="/work-with-us"
-            className="group inline-flex h-14 items-center gap-3 rounded-full bg-ochre px-7 font-semibold text-stage transition-colors hover:bg-cream"
-          >
-            Work with us
-            <Arrow className="size-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </motion.div>
       </motion.div>
     </section>
   );
